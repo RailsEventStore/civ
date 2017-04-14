@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pitboss Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Game name</th>
+      <th>Entry type</th>
+      <th>Player name</th>
+      <th>Timestamp</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pitboss_entries.each do |pitboss_entry| %>
+      <tr>
+        <td><%= pitboss_entry.game_name %></td>
+        <td><%= pitboss_entry.entry_type %></td>
+        <td><%= pitboss_entry.player_name %></td>
+        <td><%= pitboss_entry.timestamp %></td>
+        <td><%= link_to 'Show', pitboss_entry %></td>
+        <td><%= link_to 'Edit', edit_pitboss_entry_path(pitboss_entry) %></td>
+        <td><%= link_to 'Destroy', pitboss_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pitboss Entry', new_pitboss_entry_path %>

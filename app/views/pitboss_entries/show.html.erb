@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Game name:</strong>
+  <%= @pitboss_entry.game_name %>
+</p>
+
+<p>
+  <strong>Entry type:</strong>
+  <%= @pitboss_entry.entry_type %>
+</p>
+
+<p>
+  <strong>Player name:</strong>
+  <%= @pitboss_entry.player_name %>
+</p>
+
+<p>
+  <strong>Timestamp:</strong>
+  <%= @pitboss_entry.timestamp %>
+</p>
+
+<%= link_to 'Edit', edit_pitboss_entry_path(@pitboss_entry) %> |
+<%= link_to 'Back', pitboss_entries_path %>

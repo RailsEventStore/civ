@@ -1,0 +1,2 @@
+module PitbossEntriesHelper
+end
