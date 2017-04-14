@@ -7,7 +7,7 @@
     <tr>
       <th>Game name</th>
       <th>Entry type</th>
-      <th>Player name</th>
+      <th>Value</th>
       <th>Timestamp</th>
       <th colspan="3"></th>
     </tr>
@@ -18,7 +18,7 @@
       <tr>
         <td><%= pitboss_entry.game_name %></td>
         <td><%= pitboss_entry.entry_type %></td>
-        <td><%= pitboss_entry.player_name %></td>
+        <td><%= pitboss_entry.value %></td>
         <td><%= pitboss_entry.timestamp %></td>
         <td><%= link_to 'Show', pitboss_entry %></td>
         <td><%= link_to 'Edit', edit_pitboss_entry_path(pitboss_entry) %></td>

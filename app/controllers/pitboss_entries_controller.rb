@@ -69,6 +69,6 @@ class PitbossEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pitboss_entry_params
-      params.require(:pitboss_entry).permit(:game_name, :entry_type, :player_name, :timestamp)
+      params.require(:pitboss_entry).permit(:game_name, :entry_type, :value, :timestamp)
     end
 end
