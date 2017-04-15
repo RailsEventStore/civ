@@ -4,7 +4,7 @@ class PitbossEntriesController < ApplicationController
   # GET /pitboss_entries
   # GET /pitboss_entries.json
   def index
-    @pitboss_entries = PitbossEntry.order("timestamp DESC").paginate(:page => params[:page], :per_page => 30)
+    @pitboss_entries = PitbossEntry.order("timestamp ASC").paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /pitboss_entries/1
