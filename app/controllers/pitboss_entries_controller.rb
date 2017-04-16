@@ -11,16 +11,7 @@ class PitbossEntriesController < ApplicationController
   # POST /pitboss_entries.json
   def create
     @pitboss_entry = PitbossEntry.new(pitboss_entry_params)
-
-    respond_to do |format|
-      if @pitboss_entry.save
-        format.html { redirect_to @pitboss_entry, notice: 'Pitboss entry was successfully created.' }
-        format.json { render :show, status: :created, location: @pitboss_entry }
-      else
-        format.html { render :new }
-        format.json { render json: @pitboss_entry.errors, status: :unprocessable_entity }
-      end
-    end
+    @pitboss_entry.save!
   end
 
   private
