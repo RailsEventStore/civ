@@ -31,8 +31,10 @@ loop do
       parts = line.split
       if line.match(/DBG: Game Turn/)
         send_data(game_name: game_name, value: parts.last, entry_type: "NewTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
-      elsif line.match(/DBG: changeNumGameTurnActive\(-1\).+(dysk|halkye)/)
+      elsif line.match(/NetTurnComplete/)
         send_data(game_name: game_name, value: parts.last, entry_type: "PlayerEnededTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
+      elsif line.match(/NetTurnUnready/)
+        send_data(game_name: game_name, value: parts.last, entry_type: "PlayerEndTurnCancelled", timestamp: parts.first.gsub(/(\[|\])/, ""))
       end
     end
     lines_counter += 1
