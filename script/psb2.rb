@@ -34,7 +34,7 @@ loop do
       elsif line.match(/NetTurnComplete/)
         player_number = parts[8].gsub(",", "")
         if player_number.match(/\d/)
-          send_data(game_name: game_name, value: player_number, entry_type: "PlayerEnededTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
+          send_data(game_name: game_name, value: player_number, entry_type: "PlayerEndedTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
         end
       elsif line.match(/NetTurnUnready/)
         send_data(game_name: game_name, value: parts[8], entry_type: "PlayerEndTurnCancelled", timestamp: parts.first.gsub(/(\[|\])/, ""))
