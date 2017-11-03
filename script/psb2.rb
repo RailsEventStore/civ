@@ -36,7 +36,7 @@ loop do
         send_data(game_name: game_name, value: parts.last, entry_type: "NewTurnStarted", timestamp: timestamp)
       elsif line.match(/NetTurnComplete/)
         player_number = parts[8].gsub(",", "")
-        if player_number.match(/\d/) && player_number.to_i < players_count
+        if player_number.match(/\d/) && player_number.length == 1 && player_number.to_i < players_count
           send_data(game_name: game_name, value: player_number, entry_type: "PlayerEndedTurn", timestamp: timestamp)
         end
       elsif line.match(/NetTurnUnready/)
