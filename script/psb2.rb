@@ -32,7 +32,10 @@ loop do
       if line.match(/DBG: Game Turn/)
         send_data(game_name: game_name, value: parts.last, entry_type: "NewTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
       elsif line.match(/NetTurnComplete/)
-        send_data(game_name: game_name, value: parts[8].gsub(",", ""), entry_type: "PlayerEnededTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
+        player_number = parts[8].gsub(",", "")
+        if player_number.match(/\d/)
+          send_data(game_name: game_name, value: player_number, entry_type: "PlayerEnededTurn", timestamp: parts.first.gsub(/(\[|\])/, ""))
+        end
       elsif line.match(/NetTurnUnready/)
         send_data(game_name: game_name, value: parts[8], entry_type: "PlayerEndTurnCancelled", timestamp: parts.first.gsub(/(\[|\])/, ""))
       end
