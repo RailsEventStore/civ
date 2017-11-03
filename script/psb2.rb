@@ -1,7 +1,7 @@
 require "net/http"
 
 def contains_relevant_data?(line)
-  line.match(/DBG: Game Turn/) || line.match(/DBG: changeNumGameTurnActive\(-1\).+(dysk|halkye)/)
+  line.match(/DBG: Game Turn/) || line.match(/PlayerEnededTurn/) || line.match(/NetTurnUnready/)
 end
 
 def send_data(game_name:, value:, entry_type:, timestamp:)
