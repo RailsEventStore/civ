@@ -43,7 +43,7 @@ loop do
         send_data(game_name: game_name, value: parts[8], entry_type: "PlayerEndTurnCancelled", timestamp: timestamp)
       elsif line.match(/NetPlayerReady/)
         player_number = line.scan(/\d/)[-3]
-        if player_number < players_count
+        if player_number.to_i < players_count
           send_data(game_name: game_name, value: player_number, entry_type: "PlayerJoined", timestamp: timestamp)
         end
       end
