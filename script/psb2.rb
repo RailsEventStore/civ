@@ -1,7 +1,7 @@
 require "net/http"
 
 def contains_relevant_data?(line)
-  line.match(/DBG: Game Turn/) || line.match(/NetTurnComplete/) || line.match(/NetTurnUnready/) || line.match(/NetPlayerReady/)
+  line.match(/DBG: Game Turn/) || line.match(/NetTurnComplete/) || line.match(/NetTurnUnready/) || line.match(/NetPlayerReady/) || line.match(/ConnectionClosed/)
 end
 
 def send_data(game_name:, value:, entry_type:, timestamp:)
@@ -33,7 +33,7 @@ loop do
       parts = line.split
       timestamp = parts.first.gsub(/(\[|\])/, "")
       if line.match(/DBG: Game Turn/)
-        send_data(game_name: game_name, value: parts.last, entry_type: "NewTurn", timestamp: timestamp)
+        send_data(game_name: game_name, value: parts.last, entry_type: "NewTurnStarted", timestamp: timestamp)
       elsif line.match(/NetTurnComplete/)
         player_number = parts[8].gsub(",", "")
         if player_number.match(/\d/) && player_number.to_i < players_count
@@ -44,8 +44,11 @@ loop do
       elsif line.match(/NetPlayerReady/)
         player_number = line.scan(/\d/)[-3]
         if player_number.to_i < players_count
-          send_data(game_name: game_name, value: player_number, entry_type: "PlayerJoined", timestamp: timestamp)
+          send_data(game_name: game_name, value: player_number, entry_type: "PlayerConnected", timestamp: timestamp)
         end
+      elsif line.match(/ConnectionClosed/)
+        player_number = line.scan(/\d/)[-1]
+        send_data(game_name: game_name, value: player_number, entry_type: "PlayerDisconnected", timestamp: timestamp)
       end
     end
     lines_counter += 1
