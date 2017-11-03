@@ -18,7 +18,7 @@ def send_data(game_name:, value:, entry_type:, timestamp:)
 end
 
 game_name = ARGV[0]
-players_count = ARGV[1]
+players_count = ARGV[1].to_i
 
 iterations_counter = 0
 last_line_read = 0
