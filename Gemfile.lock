@@ -1,3 +1,25 @@
+GIT
+  remote: https://github.com/RailsEventStore/rails_event_store.git
+  revision: d23640e4bcd54ac2e0f8af60c1ff8633632c0d99
+  specs:
+    aggregate_root (0.19.0)
+      activesupport (>= 3.0)
+    rails_event_store (0.19.0)
+      activejob (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      aggregate_root (= 0.19.0)
+      rails_event_store_active_record (= 0.19.0)
+      ruby_event_store (= 0.19.0)
+    rails_event_store-rspec (0.19.0)
+      rspec (~> 3.0)
+    rails_event_store_active_record (0.19.0)
+      activemodel (>= 3.0)
+      activerecord-import
+      activesupport (>= 3.0)
+      ruby_event_store (= 0.19.0)
+    ruby_event_store (0.19.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,6 +55,8 @@ GEM
       activemodel (= 5.1.4)
       activesupport (= 5.1.4)
       arel (~> 8.0)
+    activerecord-import (0.20.2)
+      activerecord (>= 3.2)
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -100,6 +124,10 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -147,9 +175,14 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)
+  rails_event_store!
+  rails_event_store-rspec!
   rspec-rails (~> 3.7)
   webpacker (~> 3.0)
   will_paginate (~> 3.1.0)
+
+RUBY VERSION
+   ruby 2.4.1p111
 
 BUNDLED WITH
    1.16.0
