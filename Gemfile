@@ -8,13 +8,13 @@ end
 
 gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
+gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'sqlite3'
 end
 
 group :development do
@@ -23,7 +23,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
 end
 
 gem 'will_paginate', '~> 3.1.0'
