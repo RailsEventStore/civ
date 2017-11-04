@@ -5,11 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
-gem 'rails', '~> 5.1.0'
-gem 'puma', '~> 3.0'
-gem 'pg'
-gem 'webpacker'
+gem 'rails', '~> 5.1.4'
+gem 'puma', '~> 3.7'
+gem 'pg', '~> 0.18'
+gem 'webpacker', '~> 3.0'
 gem 'will_paginate', '~> 3.1.0'
 
 group :development, :test do
@@ -17,6 +16,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
