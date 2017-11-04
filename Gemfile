@@ -15,7 +15,7 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'rails_event_store',       github: 'RailsEventStore/rails_event_store'
 gem 'rails_event_store-rspec', github: 'RailsEventStore/rails_event_store'
-
+gem 'bounded_context',         github: 'RailsEventStore/rails_event_store'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -17,6 +17,7 @@ Bundler.require(*Rails.groups)
 
 module PitbossStats
   class Application < Rails::Application
+    config.paths.add 'game/lib', eager_load: true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
