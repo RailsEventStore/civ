@@ -23,6 +23,13 @@ module PitbossStats
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    # Disable CSRF token requirement
     config.action_controller.allow_forgery_protection = false
+
+    # Always log to STDOUT
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 end
