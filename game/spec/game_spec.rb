@@ -59,5 +59,21 @@ module Game
       expect(current_turn.turn).to eq(1)
       expect(current_turn.done).to match_array([1, 2, 3])
     end
+
+    specify do
+      given(
+        NewTurnStarted.new(data: { turn: 1 }),
+        PlayerEndedTurn.new(data: { slot: 3 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerEndedTurn.new(data: { slot: 1 }),
+        PlayerEndTurnCancelled.new(data: { slot: 1 }),
+        PlayerEndedTurn.new(data: { slot: 1 }),
+        NewTurnStarted.new(data: { turn: 2 }),
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.turn).to eq(2)
+      expect(current_turn.done).to eq([])
+    end
   end
 end

@@ -31,6 +31,7 @@ module Game
 
     def handle_new_turn(state, event)
       state.turn = event.data.fetch(:turn)
+      state.done = []
       state
     end
 
