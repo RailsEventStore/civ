@@ -1,7 +1,7 @@
 require 'aggregate_root'
 
 module Game
-  class Play
+  class Game
     include AggregateRoot
 
     def initialize(id)
@@ -12,7 +12,7 @@ module Game
       apply(PlayerRegistered.new(data: {
         player_id: player_id,
         slot_id: slot_id,
-        play_id: @id,
+        game_id: @id,
       }))
     end
 

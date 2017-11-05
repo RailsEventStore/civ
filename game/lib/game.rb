@@ -9,5 +9,5 @@ module Game
   PlayerRegistered       = Class.new(DomainEvent)
 end
 
-require 'game/play'
+require 'game/game'
 require 'game/current_turn'
