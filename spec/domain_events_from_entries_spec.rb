@@ -13,7 +13,9 @@ RSpec.describe "glue entries with domain events" do
       game_name: "dummy"
     )
 
-    expect(event_store).to have_published(an_event(Game::NewTurnStarted))
+    expect(event_store).to have_published(
+      an_event(Game::NewTurnStarted).with_data(turn: 61)
+    )
   end
 
   specify "PlayerEndedTurn" do
@@ -24,7 +26,9 @@ RSpec.describe "glue entries with domain events" do
       game_name: "dummy"
     )
 
-    expect(event_store).to have_published(an_event(Game::PlayerEndedTurn))
+    expect(event_store).to have_published(
+      an_event(Game::PlayerEndedTurn).with_data(slot: 4)
+    )
   end
 
   specify "PlayerEndTurnCancelled" do
@@ -35,7 +39,9 @@ RSpec.describe "glue entries with domain events" do
       game_name: "dummy"
     )
 
-    expect(event_store).to have_published(an_event(Game::PlayerEndTurnCancelled))
+    expect(event_store).to have_published(
+      an_event(Game::PlayerEndTurnCancelled).with_data(slot: 4)
+    )
   end
 
   specify "PlayerConnected" do
@@ -46,7 +52,9 @@ RSpec.describe "glue entries with domain events" do
       game_name: "dummy"
     )
 
-    expect(event_store).to have_published(an_event(Game::PlayerConnected))
+    expect(event_store).to have_published(
+      an_event(Game::PlayerConnected).with_data(slot: 4)
+    )
   end
 
   specify "PlayerDisconnected" do
@@ -57,7 +65,9 @@ RSpec.describe "glue entries with domain events" do
       game_name: "dummy"
     )
 
-    expect(event_store).to have_published(an_event(Game::PlayerDisconnected))
+    expect(event_store).to have_published(
+      an_event(Game::PlayerDisconnected).with_data(slot: 4)
+    )
   end
 
   specify do

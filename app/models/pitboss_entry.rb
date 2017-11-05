@@ -4,15 +4,25 @@ class PitbossEntry < ApplicationRecord
 
     case entry_type
     when "NewTurnStarted"
-      event_store.publish_event(Game::NewTurnStarted.new)
+      event_store.publish_event(Game::NewTurnStarted.new(data: {
+        turn: value.to_i
+      }))
     when "PlayerEndedTurn"
-      event_store.publish_event(Game::PlayerEndedTurn.new)
+      event_store.publish_event(Game::PlayerEndedTurn.new(data: {
+        slot: value.to_i
+      }))
     when "PlayerEndTurnCancelled"
-      event_store.publish_event(Game::PlayerEndTurnCancelled.new)
+      event_store.publish_event(Game::PlayerEndTurnCancelled.new(data: {
+        slot: value.to_i
+      }))
     when "PlayerConnected"
-      event_store.publish_event(Game::PlayerConnected.new)
+      event_store.publish_event(Game::PlayerConnected.new(data: {
+        slot: value.to_i
+      }))
     when "PlayerDisconnected"
-      event_store.publish_event(Game::PlayerDisconnected.new)
+      event_store.publish_event(Game::PlayerDisconnected.new(data: {
+        slot: value.to_i
+      }))
     end
   end
 end
