@@ -1,0 +1,11 @@
+<div class="game">
+  <div class="game__turn">
+    <h2>Turn</h2>
+    <%= @current_turn.turn %>
+  </div>
+
+  <div class="game__players-done">
+    <h2>Players with ended turn</h2>
+    <%= @current_turn.done.join(', ') %>
+  </div>
+</div>
