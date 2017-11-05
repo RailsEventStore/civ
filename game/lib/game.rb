@@ -37,6 +37,7 @@ module Game
 
     def handle_player_ended_turn(state, event)
       state.done << event.data.fetch(:slot)
+      state.done.uniq!
       state
     end
 

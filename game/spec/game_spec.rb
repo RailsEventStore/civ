@@ -75,5 +75,17 @@ module Game
       expect(current_turn.turn).to eq(2)
       expect(current_turn.done).to eq([])
     end
+
+    specify 'multiple turn ends' do
+      given(
+        NewTurnStarted.new(data: { turn: 1 }),
+        PlayerEndedTurn.new(data: { slot: 0 }),
+        PlayerEndedTurn.new(data: { slot: 0 }),
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.turn).to eq(1)
+      expect(current_turn.done).to eq([0])
+    end
   end
 end
