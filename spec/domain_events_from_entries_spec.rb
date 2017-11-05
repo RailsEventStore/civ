@@ -59,4 +59,27 @@ RSpec.describe "glue entries with domain events" do
 
     expect(event_store).to have_published(an_event(Game::PlayerDisconnected))
   end
+
+  specify do
+    PitbossEntry.create(
+      timestamp: 0,
+      value: 4,
+      entry_type: "PlayerDisconnected",
+      game_name: "dummy"
+    )
+    PitbossEntry.last.update(entry_type: "PlayerConnected")
+
+    expect(event_store).not_to have_published(an_event(Game::PlayerConnected))
+  end
+
+  specify do
+    PitbossEntry.new(
+      timestamp: 0,
+      value: 4,
+      entry_type: "PlayerDisconnected",
+      game_name: "dummy"
+    )
+
+    expect(event_store).not_to have_published(an_event(Game::PlayerDisconnected))
+  end
 end
