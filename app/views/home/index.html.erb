@@ -5,10 +5,10 @@
   </div>
 
   <div class="game__players-done">
-    <h2>Players with ended turn</h2>
+    <h2>Waiting for following players</h2>
     <ul>
-      <% done.each do |slot| %>
-        <li><%= slot %></li>
+      <% unfinished_players.each do |player| %>
+        <li><%= player.slack_name %></li>
       <% end %>
     </ul>
   </div>

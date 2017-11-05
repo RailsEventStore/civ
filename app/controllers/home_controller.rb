@@ -1,13 +1,12 @@
 class HomeController < ApplicationController
   def index
     current_turn = Game::CurrentTurn.new(Rails.configuration.event_store).call
-    turn_timer   = 24.hours
-    time_left    = current_turn.started_at + turn_timer - Time.zone.now if current_turn.started_at
+    time_left    = current_turn.ends_at - Time.zone.now
 
     render :index,
       locals: {
         turn: current_turn.turn,
-        done: current_turn.done,
+        unfinished_players: Player.where(current_turn.unfinished_player_ids),
         time_left: time_left
       }
   end
