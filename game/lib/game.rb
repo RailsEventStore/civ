@@ -14,4 +14,5 @@ module Game
 end
 
 require 'game/game'
+require 'game/service'
 require 'game/current_turn'
