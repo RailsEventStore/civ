@@ -1,11 +1,20 @@
 <div class="game">
   <div class="game__turn">
     <h2>Turn</h2>
-    <%= @current_turn.turn %>
+    <%= turn %>
   </div>
 
   <div class="game__players-done">
     <h2>Players with ended turn</h2>
-    <%= @current_turn.done.join(', ') %>
+    <ul>
+      <% done.each do |slot| %>
+        <li><%= slot %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="game__timer">
+    <h2>Estimated time left</h2>
+    <%= distance_of_time_in_words(time_left) %>
   </div>
 </div>

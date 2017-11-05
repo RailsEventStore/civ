@@ -15,8 +15,9 @@ module Game
     specify do
       current_turn = CurrentTurn.new(event_store).call
 
-      expect(current_turn.turn).to eq(0)
-      expect(current_turn.done).to eq([])
+      expect(current_turn.turn).to       eq(0)
+      expect(current_turn.done).to       eq([])
+      expect(current_turn.started_at).to eq(nil)
     end
 
     specify do
@@ -86,6 +87,22 @@ module Game
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.done).to eq([0])
+    end
+
+
+    specify do
+      given(
+        NewTurnStarted.new(
+          data: {
+            turn: 1
+          },
+          metadata: {
+            timestamp: Time.at(0).utc
+          }),
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.started_at).to eq(Time.at(0).utc)
     end
   end
 end

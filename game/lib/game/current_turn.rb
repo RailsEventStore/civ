@@ -2,7 +2,7 @@ require 'rails_event_store'
 
 module Game
   class CurrentTurn
-    State = Struct.new(:turn, :done)
+    State = Struct.new(:turn, :done, :started_at)
     private_constant :State
 
     def initialize(event_store)
@@ -23,8 +23,9 @@ module Game
     private
 
     def handle_new_turn(state, event)
-      state.turn = event.data.fetch(:turn)
-      state.done = []
+      state.turn       = event.data.fetch(:turn)
+      state.done       = []
+      state.started_at = event.metadata.fetch(:timestamp)
       state
     end
 
