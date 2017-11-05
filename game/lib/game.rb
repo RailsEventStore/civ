@@ -7,3 +7,5 @@ module Game
   PlayerEndTurnCancelled = Class.new(DomainEvent)
   NewTurnStarted         = Class.new(DomainEvent)
 end
+
+
