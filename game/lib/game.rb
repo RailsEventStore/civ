@@ -6,7 +6,11 @@ module Game
   PlayerEndedTurn        = Class.new(DomainEvent)
   PlayerEndTurnCancelled = Class.new(DomainEvent)
   NewTurnStarted         = Class.new(DomainEvent)
+  GameHosted             = Class.new(DomainEvent)
   PlayerRegistered       = Class.new(DomainEvent)
+
+  SetupGame              = Struct.new(:game_id, :turn_timer)
+  RegisterPlayer         = Struct.new(:game_id, :player_id, :slot_id)
 end
 
 require 'game/game'
