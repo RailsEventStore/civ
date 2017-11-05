@@ -12,6 +12,18 @@ module Game
       end
     end
 
+    def player_1
+      '4e7b58e1-ccb9-4159-b891-48e954d1faae'
+    end
+
+    def player_2
+      '95692a5a-04c4-4467-b1dc-76b095a76c4b'
+    end
+
+    def player_3
+      '91488a8d-0e55-43e8-a95a-84ea0122cd0f'
+    end
+
     specify do
       current_turn = CurrentTurn.new(event_store).call
 
@@ -22,6 +34,10 @@ module Game
 
     specify do
       given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
         NewTurnStarted.new(data: { turn: 1 }),
         PlayerEndedTurn.new(data: { slot: 3 }),
         PlayerEndedTurn.new(data: { slot: 2 }),
@@ -29,40 +45,52 @@ module Game
       current_turn = CurrentTurn.new(event_store).call
 
       expect(current_turn.turn).to eq(1)
-      expect(current_turn.done).to match_array([2, 3])
+      expect(current_turn.done).to match_array([player_2, player_3])
     end
 
     specify do
       given(
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        PlayerEndTurnCancelled.new(data: { slot: 1 }),
-      )
-      current_turn = CurrentTurn.new(event_store).call
-
-      expect(current_turn.turn).to eq(1)
-      expect(current_turn.done).to match_array([2, 3])
-    end
-
-    specify do
-      given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
         NewTurnStarted.new(data: { turn: 1 }),
         PlayerEndedTurn.new(data: { slot: 3 }),
         PlayerEndedTurn.new(data: { slot: 2 }),
         PlayerEndedTurn.new(data: { slot: 1 }),
         PlayerEndTurnCancelled.new(data: { slot: 1 }),
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.turn).to eq(1)
+      expect(current_turn.done).to match_array([player_2, player_3])
+    end
+
+    specify do
+      given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
+        NewTurnStarted.new(data: { turn: 1 }),
+        PlayerEndedTurn.new(data: { slot: 3 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerEndedTurn.new(data: { slot: 1 }),
+        PlayerEndTurnCancelled.new(data: { slot: 1 }),
         PlayerEndedTurn.new(data: { slot: 1 }),
       )
       current_turn = CurrentTurn.new(event_store).call
 
       expect(current_turn.turn).to eq(1)
-      expect(current_turn.done).to match_array([1, 2, 3])
+      expect(current_turn.done).to match_array([player_1, player_2, player_3])
     end
 
     specify do
       given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
         NewTurnStarted.new(data: { turn: 1 }),
         PlayerEndedTurn.new(data: { slot: 3 }),
         PlayerEndedTurn.new(data: { slot: 2 }),
@@ -79,16 +107,19 @@ module Game
 
     specify 'multiple turn ends' do
       given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
         NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 0 }),
-        PlayerEndedTurn.new(data: { slot: 0 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
       )
       current_turn = CurrentTurn.new(event_store).call
 
       expect(current_turn.turn).to eq(1)
-      expect(current_turn.done).to eq([0])
+      expect(current_turn.done).to eq([player_2])
     end
-
 
     specify do
       given(
