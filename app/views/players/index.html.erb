@@ -8,7 +8,6 @@
       <th>Id</th>
       <th>Steam name</th>
       <th>Slack name</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -18,9 +17,6 @@
         <td><%= player.id %></td>
         <td><%= player.steam_name %></td>
         <td><%= player.slack_name %></td>
-        <td><%= link_to 'Show', player %></td>
-        <td><%= link_to 'Edit', edit_player_path(player) %></td>
-        <td><%= link_to 'Destroy', player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -8,7 +8,7 @@
     <h2>Waiting for following players</h2>
     <ul>
       <% unfinished_players.each do |player| %>
-        <li><%= player.slack_name %></li>
+        <li>@<%= player.slack_name %> as <strong><%= player.steam_name %></strong></li>
       <% end %>
     </ul>
   </div>

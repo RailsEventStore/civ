@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :players
-  root to: 'home#index'
+  root to: 'root#welcome'
 
+  resources :games
+  resources :players
   resources :pitboss_entries, only: [:create, :index]
 end
