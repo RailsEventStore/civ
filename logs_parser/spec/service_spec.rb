@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-RSpec.describe LogsParser do
+RSpec.describe LogsParser::Service do
   specify "returns nil if line doesn't contain relevant data" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("fasd\n")
