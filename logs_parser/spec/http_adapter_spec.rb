@@ -10,7 +10,11 @@ RSpec.describe LogsParser::HttpAdapter do
 
     adapter = LogsParser::HttpAdapter.new(host: "fierce-something.com")
     payload = Payload.new("arkency123", "NewTurnStarted", "7", "1234.56")
-    adapter.send_data(payload)
+
+    response = adapter.send_data(payload)
+
+    expect(response.code).to eq("204")
+    expect(response.code_type).to eq(Net::HTTPNoContent)
   end
 
   specify "send_data server error" do

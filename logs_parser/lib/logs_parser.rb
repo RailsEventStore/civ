@@ -92,6 +92,7 @@ module LogsParser
       unless response.code_type == Net::HTTPNoContent
         raise ServerError, response.code
       end
+      return response
     rescue Timeout::Error, EOFError, Errno::EINVAL,
       Errno::ECONNRESET, Errno::ETIMEDOUT, Errno::ECONNREFUSED,
       Errno::EHOSTUNREACH, SocketError, Net::ProtocolError => e
