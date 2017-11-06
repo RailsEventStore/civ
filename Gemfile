@@ -20,6 +20,7 @@ gem 'bounded_context',         github: 'RailsEventStore/rails_event_store'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.7'
+  gem 'webmock', '~>3.1'
 end
 
 group :development do
