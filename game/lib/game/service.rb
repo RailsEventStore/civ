@@ -4,7 +4,7 @@ module Game
       @event_store = event_store
     end
 
-    def setup_game(cmd)
+    def host_game(cmd)
       with_game(cmd.game_id) do |game|
         game.host_game(cmd.turn_timer)
       end

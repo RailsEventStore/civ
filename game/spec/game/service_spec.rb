@@ -22,7 +22,7 @@ module Game
 
     specify do
       service = Service.new(event_store)
-      service.setup_game(SetupGame.new(game_id, 24.hours))
+      service.host_game(HostGame.new(game_id, 24.hours))
 
       expect(event_store).to have_published(GameHosted).in_stream(game_stream)
     end
