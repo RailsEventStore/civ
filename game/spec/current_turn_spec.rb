@@ -2,9 +2,7 @@ require_relative 'spec_helper'
 
 module Game
   RSpec.describe CurrentTurn do
-    def event_store
-      @event_store ||= RailsEventStore::Client.new(repository: RailsEventStore::InMemoryRepository.new)
-    end
+    include InMemoryEventStore
 
     def given(*domain_events)
       domain_events.each do |domain_event|
