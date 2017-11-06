@@ -10,11 +10,26 @@ module Game
       "Game$#{game_id}"
     end
 
+    def player_id
+      '7f27f9b8-38fd-4c1d-b26d-fd7193ac1be4'
+    end
+
+    def slot_id
+      0
+    end
+
     specify do
       service = Service.new(event_store)
       service.setup_game(SetupGame.new(game_id, 24.hours))
 
       expect(event_store).to have_published(GameHosted).in_stream(game_stream)
+    end
+
+    specify do
+      service = Service.new(event_store)
+      service.register_player(RegisterPlayer.new(game_id, player_id, slot_id))
+
+      expect(event_store).to have_published(PlayerRegistered).in_stream(game_stream)
     end
   end
 end
