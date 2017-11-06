@@ -1,5 +1,9 @@
 class PitbossEntry < ApplicationRecord
-  after_create_commit do
+  after_create_commit do |record|
+    record.entry_to_domain_event
+  end
+
+  def entry_to_domain_event
     event_store = Rails.configuration.event_store
 
     case entry_type
