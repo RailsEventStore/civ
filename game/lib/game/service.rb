@@ -6,7 +6,7 @@ module Game
 
     def setup_game(cmd)
       with_game(cmd.game_id) do |game|
-        game.setup_game(cmd.turn_timer)
+        game.host_game(cmd.turn_timer)
       end
     end
 
