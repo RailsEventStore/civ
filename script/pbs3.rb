@@ -16,10 +16,10 @@ end
 
 game_name = ARGV[0]
 players_count = ARGV[1].to_i
+last_line_read = ARGV[2].to_i || 0
 parser = LogsParser::Service.new(game_name, players_count)
 
 iterations_counter = 0
-last_line_read = 0
 loop do
   puts "Iteration #{iterations_counter}"
   puts "Processing log file from line #{last_line_read}..."
