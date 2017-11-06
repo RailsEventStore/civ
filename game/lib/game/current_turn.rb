@@ -7,7 +7,10 @@ module Game
 
     def initialize(event_store)
       @event_store = event_store
-      @projection =
+    end
+
+    def call
+      state =
         RailsEventStore::Projection
           .from_all_streams
           .init(method(:initial_state))
@@ -17,10 +20,7 @@ module Game
           .when(PlayerEndedTurn, method(:handle_player_ended_turn))
           .when(PlayerEndTurnCancelled, method(:handle_player_end_turn_cancelled))
           .when(PlayerConnected, method(:handle_player_end_turn_cancelled))
-    end
-
-    def call
-      state = @projection.run(@event_store)
+          .run(@event_store, count: 1000)
       Result.new(
         state[:turn],
         state[:unfinished_player_ids],
