@@ -25,6 +25,14 @@ module PitbossStats
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.generators do |g|
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.view_specs false
+      g.controller_specs false
+    end
+
     # Disable CSRF token requirement
     config.action_controller.allow_forgery_protection = false
 
