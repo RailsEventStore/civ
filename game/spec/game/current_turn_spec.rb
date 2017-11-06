@@ -119,6 +119,24 @@ module Game
       expect(current_turn.unfinished_player_ids).to eq([player_1, player_3])
     end
 
+    specify "player connected sets turn unfinished" do
+      given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
+        NewTurnStarted.new(data: { turn: 1 }),
+        PlayerEndedTurn.new(data: { slot: 3 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerEndedTurn.new(data: { slot: 1 }),
+        PlayerConnected.new(data: { slot: 1 }),
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.turn).to eq(1)
+      expect(current_turn.unfinished_player_ids).to eq([player_1])
+    end
+
     specify do
       given(
         GameHosted.new(data: { turn_timer: 24.hours }),

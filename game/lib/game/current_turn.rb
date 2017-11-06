@@ -16,6 +16,7 @@ module Game
           .when(NewTurnStarted, method(:handle_new_turn))
           .when(PlayerEndedTurn, method(:handle_player_ended_turn))
           .when(PlayerEndTurnCancelled, method(:handle_player_end_turn_cancelled))
+          .when(PlayerConnected, method(:handle_player_end_turn_cancelled))
     end
 
     def call
