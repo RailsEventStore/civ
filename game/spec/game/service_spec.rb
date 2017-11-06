@@ -1,3 +1,5 @@
+require_relative '../spec_helper'
+
 module Game
   RSpec.describe Service do
     include InMemoryEventStore
