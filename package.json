@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "@rails/webpacker": "^3.0.2"
+    "@rails/webpacker": "^3.0.2",
+    "normalize-css": "^2.3.1",
+    "open-color": "^1.5.1"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.9.4"
