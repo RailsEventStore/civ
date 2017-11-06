@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     render :index,
       locals: {
         turn: current_turn.turn,
-        unfinished_players: Player.where(current_turn.unfinished_player_ids),
+        unfinished_players: Player.where(id: current_turn.unfinished_player_ids),
         time_left: time_left
       }
   end
