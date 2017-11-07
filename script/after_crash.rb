@@ -1,7 +1,7 @@
 require_relative "logs_parser/lib/logs_parser"
-game_name = ARGV[0]
-players_count ARGV[1]
-turn_number = ARGV[2]
+game_name      = ARGV[0]
+players_count  = ARGV[1]
+turn_number    = ARGV[2]
 last_timestamp = ARGV[3]
 host = ARGV[4] || "fierce-reaches-40697.herokuapp.com"
 
