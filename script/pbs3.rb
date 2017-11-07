@@ -15,9 +15,11 @@ loop do
   lines_counter = 0
   previous_last_line_read = last_line_read
   IO.foreach("net_message_debug.log") do |line|
-    if result = parser.call(line)
-      response = http_adapter.send_data(result)
-      puts response.inspect
+    if lines_counter >= previous_last_line_read
+      if result = parser.call(line)
+        response = http_adapter.send_data(result)
+        puts response.inspect
+      end
     end
 
     lines_counter += 1
