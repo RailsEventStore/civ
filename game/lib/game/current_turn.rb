@@ -12,7 +12,7 @@ module Game
     def call(stream_name)
       state =
         RailsEventStore::Projection
-          .from_stream(stream_name)
+          .from_all_streams
           .init(method(:initial_state))
           .when(GameHosted,             method(:handle_game_hosted))
           .when(PlayerRegistered,       method(:handle_player_registered))
