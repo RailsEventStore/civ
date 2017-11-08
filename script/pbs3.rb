@@ -15,15 +15,21 @@ loop do
   lines_counter = 0
   previous_last_line_read = last_line_read
   IO.foreach("net_message_debug.log") do |line|
-    if lines_counter >= previous_last_line_read
-      if result = parser.call(line)
-        response = http_adapter.send_data(result)
-        puts response.inspect
+    begin
+      if lines_counter >= previous_last_line_read
+        if result = parser.call(line)
+          response = http_adapter.send_data(result)
+          puts response.inspect
+        end
       end
-    end
 
-    lines_counter += 1
-    last_line_read = lines_counter
+      lines_counter += 1
+      last_line_read = lines_counter
+    rescue LogsParser::HttpAdapter::NetworkError, LogsParser::HttpAdapter::ServerError => e
+      puts "Error sending data: #{e.class}, #{e.message}!"
+      puts "Data starting from line #{last_line_read} will be retransmitted soon."
+      break
+    end
   end
   iterations_counter += 1
   sleep 60
