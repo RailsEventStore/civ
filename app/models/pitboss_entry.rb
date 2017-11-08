@@ -10,23 +10,23 @@ class PitbossEntry < ApplicationRecord
     when "NewTurnStarted"
       event_store.publish_event(Game::NewTurnStarted.new(data: {
         turn: value.to_i
-      }))
+      }), stream_name: "Game$#{game_name}")
     when "PlayerEndedTurn"
       event_store.publish_event(Game::PlayerEndedTurn.new(data: {
         slot: value.to_i
-      }))
+      }), stream_name: "Game$#{game_name}")
     when "PlayerEndTurnCancelled"
       event_store.publish_event(Game::PlayerEndTurnCancelled.new(data: {
         slot: value.to_i
-      }))
+      }), stream_name: "Game$#{game_name}")
     when "PlayerConnected"
       event_store.publish_event(Game::PlayerConnected.new(data: {
         slot: value.to_i
-      }))
+      }), stream_name: "Game$#{game_name}")
     when "PlayerDisconnected"
       event_store.publish_event(Game::PlayerDisconnected.new(data: {
         slot: value.to_i
-      }))
+      }), stream_name: "Game$#{game_name}")
     end
   end
 end
