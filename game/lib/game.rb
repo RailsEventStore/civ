@@ -12,6 +12,7 @@ module Game
 
   HostGame               = Struct.new(:game_id, :turn_timer)
   RegisterPlayer         = Struct.new(:game_id, :player_id, :slot_id)
+  UnregisterPlayer       = Struct.new(:game_id, :player_id, :slot_id)
 end
 
 require 'game/game'

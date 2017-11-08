@@ -18,7 +18,7 @@ module Game
 
     def unregister_player(cmd)
       with_game(cmd.game_id) do |game|
-        game.register_player(cmd.player_id, cmd.slot_id)
+        game.unregister_player(cmd.player_id, cmd.slot_id)
       end
     end
 

@@ -33,5 +33,12 @@ module Game
 
       expect(event_store).to have_published(PlayerRegistered).in_stream(game_stream)
     end
+
+    specify do
+      service = Service.new(event_store)
+      service.unregister_player(UnregisterPlayer.new(game_id, player_id, slot_id))
+
+      expect(event_store).to have_published(PlayerUnregistered).in_stream(game_stream)
+    end
   end
 end
