@@ -27,6 +27,16 @@ module Game
             game_id: game_id
           )
       )
+
+      game.unregister_player(player_id, slot_id)
+      expect(game).to have_applied(
+        an_event(PlayerUnregistered)
+          .with_data(
+            slot_id: slot_id,
+            player_id: player_id,
+            game_id: game_id
+          )
+      )
     end
 
     def game_id

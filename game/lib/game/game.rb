@@ -23,9 +23,20 @@ module Game
       }))
     end
 
+    def unregister_player(player_id, slot_id)
+      apply(PlayerUnregistered.new(data: {
+        player_id: player_id,
+        slot_id: slot_id,
+        game_id: @id,
+      }))
+    end
+
     private
 
     def apply_player_registered(_event)
+    end
+
+    def apply_player_unregistered(_event)
     end
 
     def apply_game_hosted(_event)

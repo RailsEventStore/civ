@@ -152,5 +152,22 @@ module Game
 
       expect(current_turn.ends_at).to eq(Time.at(24.hours).utc)
     end
+
+    specify 'player unregistered' do
+      given(
+        GameHosted.new(data: { turn_timer: 24.hours }),
+        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
+        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
+        NewTurnStarted.new(data: { turn: 1 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerEndedTurn.new(data: { slot: 2 }),
+        PlayerUnregistered.new(data: { slot_id: 3, player_id: player_3 })
+      )
+      current_turn = CurrentTurn.new(event_store).call
+
+      expect(current_turn.turn).to eq(1)
+      expect(current_turn.unfinished_player_ids).to eq([player_1])
+    end
   end
 end

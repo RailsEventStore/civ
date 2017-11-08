@@ -14,12 +14,13 @@ module Game
         RailsEventStore::Projection
           .from_all_streams
           .init(method(:initial_state))
-          .when(GameHosted, method(:handle_game_hosted))
-          .when(PlayerRegistered, method(:handle_player_registered))
-          .when(NewTurnStarted, method(:handle_new_turn))
-          .when(PlayerEndedTurn, method(:handle_player_ended_turn))
+          .when(GameHosted,             method(:handle_game_hosted))
+          .when(PlayerRegistered,       method(:handle_player_registered))
+          .when(PlayerUnregistered,     method(:handle_player_unregistered))
+          .when(NewTurnStarted,         method(:handle_new_turn))
+          .when(PlayerEndedTurn,        method(:handle_player_ended_turn))
           .when(PlayerEndTurnCancelled, method(:handle_player_end_turn_cancelled))
-          .when(PlayerConnected, method(:handle_player_end_turn_cancelled))
+          .when(PlayerConnected,        method(:handle_player_end_turn_cancelled))
           .run(@event_store, count: 1000)
       Result.new(
         state[:turn],
@@ -65,6 +66,12 @@ module Game
     def handle_player_registered(state, event)
       state[:registered_slots][event.data.fetch(:slot_id)] =
         event.data.fetch(:player_id)
+      state
+    end
+
+    def handle_player_unregistered(state, event)
+      removed_player_id = state[:registered_slots].delete(event.data.fetch(:slot_id))
+      state[:unfinished_player_ids].delete(removed_player_id)
       state
     end
 
