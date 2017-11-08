@@ -26,7 +26,7 @@ loop do
       lines_counter += 1
       last_line_read = lines_counter
     rescue LogsParser::HttpAdapter::NetworkError, LogsParser::HttpAdapter::ServerError => e
-      puts "Error sending data: #{e.class}, #{e.message}!"
+      puts "Error sending data: #{e.class} - #{e.message}"
       puts "Data starting from line #{last_line_read} will be retransmitted soon."
       break
     end
