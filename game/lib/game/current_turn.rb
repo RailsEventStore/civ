@@ -9,10 +9,10 @@ module Game
       @event_store = event_store
     end
 
-    def call
+    def call(stream_name)
       state =
         RailsEventStore::Projection
-          .from_all_streams
+          .from_stream(stream_name)
           .init(method(:initial_state))
           .when(GameHosted,             method(:handle_game_hosted))
           .when(PlayerRegistered,       method(:handle_player_registered))
@@ -21,7 +21,7 @@ module Game
           .when(PlayerEndedTurn,        method(:handle_player_ended_turn))
           .when(PlayerEndTurnCancelled, method(:handle_player_end_turn_cancelled))
           .when(PlayerConnected,        method(:handle_player_end_turn_cancelled))
-          .run(@event_store, count: 1000)
+          .run(@event_store, count: 10000)
       Result.new(
         state[:turn],
         state[:unfinished_player_ids],

@@ -6,8 +6,12 @@ module Game
 
     def given(*domain_events)
       domain_events.each do |domain_event|
-        event_store.append_to_stream(domain_event)
+        event_store.append_to_stream(domain_event, stream_name: game_id)
       end
+    end
+
+    def game_id
+      "2d3e49d1-ff3f-4326-9e30-73463f349a84"
     end
 
     def player_1
@@ -23,7 +27,7 @@ module Game
     end
 
     specify do
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to                  eq(0)
       expect(current_turn.unfinished_player_ids).to eq([])
@@ -40,7 +44,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 3 }),
         PlayerEndedTurn.new(data: { slot: 2 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to                  eq(1)
       expect(current_turn.unfinished_player_ids).to match_array([player_1])
@@ -58,7 +62,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 1 }),
         PlayerEndTurnCancelled.new(data: { slot: 1 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to match_array([player_1])
@@ -77,7 +81,7 @@ module Game
         PlayerEndTurnCancelled.new(data: { slot: 1 }),
         PlayerEndedTurn.new(data: { slot: 1 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to match_array([])
@@ -97,7 +101,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 1 }),
         NewTurnStarted.new(data: { turn: 2 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(2)
       expect(current_turn.unfinished_player_ids).to eq([player_1, player_2, player_3])
@@ -113,7 +117,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 2 }),
         PlayerEndedTurn.new(data: { slot: 2 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to eq([player_1, player_3])
@@ -131,7 +135,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 1 }),
         PlayerConnected.new(data: { slot: 1 }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to eq([player_1])
@@ -148,7 +152,7 @@ module Game
             timestamp: Time.at(0).utc
           }),
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.ends_at).to eq(Time.at(24.hours).utc)
     end
@@ -164,7 +168,7 @@ module Game
         PlayerEndedTurn.new(data: { slot: 2 }),
         PlayerUnregistered.new(data: { slot_id: 3, player_id: player_3 })
       )
-      current_turn = CurrentTurn.new(event_store).call
+      current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to eq([player_1])
