@@ -41,5 +41,11 @@ module Game
 
     def apply_game_hosted(_event)
     end
+
+    def apply_new_turn_started(_event)
+    end
+
+    def apply_player_end_turn_cancelled(_event)
+    end
   end
 end
