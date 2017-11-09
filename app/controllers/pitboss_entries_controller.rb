@@ -1,6 +1,6 @@
 class PitbossEntriesController < ApplicationController
   def index
-    @pitboss_entries = PitbossEntry.order("timestamp ASC").paginate(:page => params[:page], :per_page => 30)
+    @pitboss_entries = PitbossEntry.order("id ASC").paginate(:page => params[:page], :per_page => 30)
   end
 
   def create
