@@ -50,8 +50,8 @@ end
 #### change game config to enabled logging
 #### download parser:
 
-[Script](https://github.com/dysk/pitboss-stats/blob/master/script/pbs3.rb)
-[Parser lib](https://github.com/dysk/pitboss-stats/blob/master/logs_parser/lib/logs_parser.rb)
+* [Script](https://github.com/dysk/pitboss-stats/blob/master/script/pbs3.rb)
+* [Parser lib](https://github.com/dysk/pitboss-stats/blob/master/logs_parser/lib/logs_parser.rb)
 
 and place in Logs directory
 
