@@ -33,14 +33,12 @@ Player.create!(steam_name: "halkye", slack_name: "halki")
 Player.create!(steam_name: "The Rubyist", slack_name: "pkondzior")
 ```
 
-##### register players
+##### register players in correct order
 
 ```ruby
-[ {slack_name: "swistak", slot_id: 0}, {slack_name: "jorgen", slot_id: 1},
-  {slack_name: "halki", slot_id: 2}, {slack_name: "dysk", slot_id: 3},
-  {slack_name: "pkondzior", slot_id: 7} ].each do |player_data|
-  player = Player.find_by(slack_name: player_data[:slack_name])
-  command = Game::RegisterPlayer.new(game_id, player.id, player_data[:slot_id])
+["halkye", "tango_mig", "pan_sarin", "swistak35", "The Rubyist", "jura55", "jamesworthy", "dysk"].each_with_index do |steam_name, index|
+  player = Player.find_by(steam_name: steam_name)
+  command = Game::RegisterPlayer.new(game_id, player.id, index)
   service.register_player(command)
 end
 ```
