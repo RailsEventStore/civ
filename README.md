@@ -43,6 +43,15 @@ Player.create!(steam_name: "The Rubyist", slack_name: "pkondzior")
 end
 ```
 
+##### unregister players in case they are no longer playing
+
+```ruby
+event_store = Rails.configuration.event_store
+service = Game::Service.new(event_store)
+command = Game::UnregisterPlayer.new("189e3f21-27c7-431b-9025-1feb92697635", Player.find_by(steam_name: "halkye").id, 2)
+service.unregister_player(command)
+```
+
 ### Game server
 
 #### change game config to enabled logging
