@@ -45,6 +45,9 @@ module Game
     def apply_new_turn_started(_event)
     end
 
+    def apply_player_ended_turn(_event)
+    end
+
     def apply_player_end_turn_cancelled(_event)
     end
 
