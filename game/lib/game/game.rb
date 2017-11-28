@@ -47,5 +47,11 @@ module Game
 
     def apply_player_end_turn_cancelled(_event)
     end
+
+    def apply_player_connected(_event)
+    end
+
+    def apply_player_disconnected(_event)
+    end
   end
 end
