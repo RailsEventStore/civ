@@ -19,6 +19,7 @@ module Notifications
 
     def new_turn_notification(event)
       game = ReadModel::GameReadModel.find(event.data[:game_id])
+      return unless game.slack_token
       client = Slack::Web::Client.new(token: game.slack_token)
       client.chat_postMessage(channel: game.slack_channel, text: game.build_slack_new_turn_message(event.data), as_user: true)
     end
