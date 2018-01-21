@@ -19,7 +19,7 @@ service.host_game(host_game_command)
 ##### rename game:
 
 ```ruby
-game_read_model = ReadModel::Game.find(game_id)
+game_read_model = ReadModel::GameReadModel.find(game_id)
 game_read_model.name = "arkency2"
 game_read_model.save
 ```

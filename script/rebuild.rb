@@ -3,10 +3,10 @@ service = Game::Service.new(Rails.configuration.event_store)
 
 RailsEventStoreActiveRecord::Event.delete_all
 RailsEventStoreActiveRecord::EventInStream.delete_all
-ReadModel::Game.find(game_id).delete
+ReadModel::GameReadModel.find(game_id).delete
 
 service.host_game(Game::HostGame.new(game_id, 24.hours))
-ReadModel::Game.where(id: game_id).update_all(name: 'arkency3')
+ReadModel::GameReadModel.where(id: game_id).update_all(name: 'arkency3')
 
 %w[
   fa09c04c-6978-470d-b195-442ff9ece774

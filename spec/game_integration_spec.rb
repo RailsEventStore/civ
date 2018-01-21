@@ -9,6 +9,6 @@ RSpec.describe 'game integration' do
     service = Game::Service.new(Rails.configuration.event_store)
     service.host_game(Game::HostGame.new(game_id, 24.hours))
 
-    expect{ReadModel::Game.find(game_id)}.not_to raise_error
+    expect{ReadModel::GameReadModel.find(game_id)}.not_to raise_error
   end
 end

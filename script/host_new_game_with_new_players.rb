@@ -4,7 +4,7 @@ service = Game::Service.new(event_store)
 game_id = SecureRandom.uuid
 host_game_command = Game::HostGame.new(game_id, 24.hours)
 service.host_game(host_game_command)
-game_read_model = ReadModel::Game.find(game_id)
+game_read_model = ReadModel::GameReadModel.find(game_id)
 game_read_model.name = "arkency1"
 game_read_model.save
 

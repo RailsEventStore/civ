@@ -3,7 +3,7 @@ class GamesController < ApplicationController
     current_turn = Game::CurrentTurn.new(Rails.configuration.event_store)
       .call("Game$#{params[:id]}")
     time_left    = current_turn.ends_at - Time.zone.now rescue 365.days
-    game_name = ReadModel::Game.find(params[:id]).name.capitalize
+    game_name = ReadModel::GameReadModel.find(params[:id]).name.capitalize
 
     render :show,
       locals: {
