@@ -16,11 +16,14 @@ host_game_command = Game::HostGame.new(game_id, 24.hours)
 service.host_game(host_game_command)
 ```
 
-##### rename game:
+##### rename game and add slack data:
 
 ```ruby
 game_read_model = ReadModel::GameReadModel.find(game_id)
 game_read_model.name = "arkency2"
+slack_token = "your-token"
+slack_channel = "your-game-channel"
+ip_address = "your-game-ip-address"
 game_read_model.save
 ```
 

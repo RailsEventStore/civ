@@ -9,7 +9,8 @@ class PitbossEntry < ApplicationRecord
     case entry_type
     when "NewTurnStarted"
       event_store.publish_event(Game::NewTurnStarted.new(data: {
-        turn: value.to_i
+        turn: value.to_i,
+        game_id: game_name,
       }), stream_name: "Game$#{game_name}")
     when "PlayerEndedTurn"
       event_store.publish_event(Game::PlayerEndedTurn.new(data: {
