@@ -10,8 +10,8 @@ module ReadModel
     end
 
     def build_slack_new_turn_message(event_data)
-      "Game #{name} Turn #{event_data[:turn]} @channel
-      steam://run/8930/q/%2Bconnect%20#{ip_address}"
+      "Game #{name} Turn #{event_data[:turn]} <!channel>
+steam://run/8930/q/%2Bconnect%20#{ip_address}"
     end
   end
 end

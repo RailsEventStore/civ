@@ -21,7 +21,11 @@ module Notifications
       game = ReadModel::GameReadModel.find(event.data[:game_id])
       return unless game.slack_token
       client = Slack::Web::Client.new(token: game.slack_token)
-      client.chat_postMessage(channel: game.slack_channel, text: game.build_slack_new_turn_message(event.data), as_user: true)
+      client.chat_postMessage(channel: game.slack_channel, text: game.build_slack_new_turn_message(event.data), as_user: false, icon_url: gandhi_url)
+    end
+
+    def gandhi_url
+      "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443"
     end
 
     attr_reader :logger

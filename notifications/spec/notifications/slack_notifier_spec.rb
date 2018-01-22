@@ -39,10 +39,11 @@ module Notifications
     specify do
       event = Game::NewTurnStarted.new(data: { turn: 1, game_id: game_id })
       stub = stub_request(:post, "https://slack.com/api/chat.postMessage").
-         with(body: {"as_user"=>"true",
-            "channel"=>game_slack_channel,
-            "text"=>game_read_model.build_slack_new_turn_message(event.data),
-            "token"=>game_slack_token},
+         with(body: {"as_user"=>"false",
+              "channel"=>"#arkency58",
+              "icon_url"=>"https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
+              "text"=>"Game  Turn 1 <!channel>\nsteam://run/8930/q/%2Bconnect%2010.4.0.28",
+              "token"=>"xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b"},
           headers: {'Accept'=>'application/json; charset=utf-8',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Content-Type'=>'application/x-www-form-urlencoded',
