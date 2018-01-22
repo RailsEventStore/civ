@@ -2,7 +2,9 @@ require_relative '../spec_helper'
 
 module Notifications
   RSpec.describe SlackNotifier do
-    include InMemoryEventStore
+    def event_store
+      Rails.configuration.event_store
+    end
 
     def game_id
       "2d3e49d1-ff3f-4326-9e30-73463f349a84"
@@ -27,12 +29,10 @@ module Notifications
         slack_channel: game_slack_channel,
         ip_address:    game_ip_address
       )
+
     end
 
     before do
-      event_store.subscribe(->(event) { Notifications::SlackNotifier.new.call(event) }, [
-        Game::NewTurnStarted
-      ])
       game_read_model
     end
 
