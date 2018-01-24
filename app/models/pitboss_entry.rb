@@ -19,15 +19,18 @@ class PitbossEntry < ApplicationRecord
       }), stream_name: "Game$#{game_name}")
     when "PlayerEndTurnCancelled"
       event_store.publish_event(Game::PlayerEndTurnCancelled.new(data: {
-        slot: value.to_i
+        slot: value.to_i,
+        game_id: game_name,
       }), stream_name: "Game$#{game_name}")
     when "PlayerConnected"
       event_store.publish_event(Game::PlayerConnected.new(data: {
-        slot: value.to_i
+        slot: value.to_i,
+        game_id: game_name,
       }), stream_name: "Game$#{game_name}")
     when "PlayerDisconnected"
       event_store.publish_event(Game::PlayerDisconnected.new(data: {
-        slot: value.to_i
+        slot: value.to_i,
+        game_id: game_name,
       }), stream_name: "Game$#{game_name}")
     end
   end

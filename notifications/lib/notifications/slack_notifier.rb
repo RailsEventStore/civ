@@ -9,7 +9,7 @@ module Notifications
       case event
       when Game::NewTurnStarted
         new_turn_notification(event)
-      when Game::PlayerEndedTurn
+      when Game::PlayerDisconnected
         maybe_notify_last_player(event)
       end
     rescue => e

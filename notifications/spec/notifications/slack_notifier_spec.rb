@@ -85,6 +85,7 @@ module Notifications
         Game::NewTurnStarted.new(data: { turn: 1 }),
         Game::PlayerEndedTurn.new(data: { slot: 3, game_id: game_id }),
         Game::PlayerEndedTurn.new(data: { slot: 2, game_id: game_id }),
+        Game::PlayerDisconnected.new(data: { slot: 2, game_id: game_id }),
       )
       expect(stub).to have_been_requested
     end

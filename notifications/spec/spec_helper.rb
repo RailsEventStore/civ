@@ -11,7 +11,7 @@ require 'rails_event_store/rspec'
 module InMemoryEventStore
   def event_store
     @event_store ||= RailsEventStore::Client.new(repository: RailsEventStore::InMemoryRepository.new).tap do |client|
-      client.subscribe(->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) }, [Game::NewTurnStarted, Game::PlayerEndedTurn])
+      client.subscribe(->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) }, [Game::NewTurnStarted, Game::PlayerDisconnected])
     end
   end
 end
