@@ -39,7 +39,7 @@ module Notifications
 
     def given(*domain_events)
       domain_events.each do |domain_event|
-        event_store.publish_event(domain_event, stream_name: game_id)
+        event_store.publish_event(domain_event, stream_name: "Game$#{game_id}")
       end
     end
 
