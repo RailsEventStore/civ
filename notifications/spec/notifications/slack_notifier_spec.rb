@@ -69,7 +69,7 @@ module Notifications
          with(body: {"as_user"=>"false",
             "channel"=>"#arkency58",
             "icon_url"=>"https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
-            "text"=>"Turn <!slack_user>",
+            "text"=>"Turn <@slack_user>",
             "token"=>"xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b"},
           headers: {'Accept'=>'application/json; charset=utf-8',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',

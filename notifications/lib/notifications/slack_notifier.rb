@@ -34,7 +34,7 @@ module Notifications
       if current_turn.unfinished_player_ids.size == 1
         last_player = Player.where(id: current_turn.unfinished_player_ids).first
         client = Slack::Web::Client.new(token: game.slack_token)
-        client.chat_postMessage(channel: game.slack_channel, text: "Turn <!#{last_player.slack_name}>", as_user: false, icon_url: gandhi_url)
+        response = client.chat_postMessage(channel: game.slack_channel, text: "Turn <@#{last_player.slack_name}>", as_user: false, icon_url: gandhi_url)
       end
     end
 
