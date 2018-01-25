@@ -89,5 +89,40 @@ module Notifications
       )
       expect(stub).to have_been_requested
     end
+
+    specify "ping multiple remaining players" do
+      player_1 = Player.create!(steam_name: "some_player", slack_name: "slack_user")
+      player_2 = Player.create!(steam_name: "anohter_player", slack_name: "anohter_player")
+      ReadModel::GameReadModel.find_or_create_by!(
+        id:            game_id,
+        slack_token:   game_slack_token,
+        slack_channel: game_slack_channel,
+        ip_address:    game_ip_address,
+        number_of_remaining_players_to_notify: 2,
+      )
+
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage").
+         with(body: {"as_user"=>"false",
+            "channel"=>"#arkency58",
+            "icon_url"=>"https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
+            "text"=>"Turn <@slack_user> <@anohter_player>",
+            "token"=>"xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b"},
+          headers: {'Accept'=>'application/json; charset=utf-8',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Content-Type'=>'application/x-www-form-urlencoded',
+            'User-Agent'=>'Slack Ruby Client/0.11.0'}).
+         to_return(status: 200, body: {ok: true}.to_json, headers: {})
+
+      given(
+        Game::GameHosted.new(data: { turn_timer: 24.hours, game_id: game_id }),
+        Game::PlayerRegistered.new(data: { slot_id: 1, player_id: player_1.id }),
+        Game::PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
+        Game::PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
+        Game::NewTurnStarted.new(data: { turn: 1 }),
+        Game::PlayerEndedTurn.new(data: { slot: 3, game_id: game_id }),
+        Game::PlayerDisconnected.new(data: { slot: 3, game_id: game_id }),
+      )
+      expect(stub).to have_been_requested
+    end
   end
 end

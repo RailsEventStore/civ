@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121202401) do
+ActiveRecord::Schema.define(version: 20180125121659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20180121202401) do
     t.string "slack_token"
     t.string "slack_channel"
     t.string "ip_address"
+    t.integer "number_of_remaining_players_to_notify", default: 1, null: false
   end
 
 end
