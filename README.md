@@ -21,9 +21,9 @@ service.host_game(host_game_command)
 ```ruby
 game_read_model = ReadModel::GameReadModel.find(game_id)
 game_read_model.name = "arkency2"
-slack_token = "your-token"
-slack_channel = "your-game-channel"
-ip_address = "your-game-ip-address"
+game_read_model.slack_token = "your-token"
+game_read_model.slack_channel = "your-game-channel"
+game_read_model.ip_address = "your-game-ip-address"
 game_read_model.save
 ```
 
