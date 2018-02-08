@@ -36,7 +36,8 @@ module Notifications
           "<@#{player.slack_name}>"
         end.join(" ")
         client = Slack::Web::Client.new(token: game.slack_token)
-        client.chat_postMessage(channel: game.slack_channel, text: "Turn " + remaining_players_mentions, as_user: false, icon_url: gandhi_url)
+        response = client.chat_postMessage(channel: game.slack_channel, text: "Turn " + remaining_players_mentions, as_user: false, icon_url: gandhi_url)
+        logger.info("Slack response: #{response.pretty_inspect}") if logger
       end
     end
 
