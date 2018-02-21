@@ -10,7 +10,7 @@ module Notifications
       when Game::NewTurnStarted
         new_turn_notification(event)
       when Game::PlayerDisconnected
-        maybe_notify_remainging_players(event)
+        maybe_notify_remaining_players(event)
       end
     rescue => e
       error_message = "Error in Notifications::SlackNotifier: #{e.inspect}"
@@ -27,7 +27,7 @@ module Notifications
       client.chat_postMessage(channel: game.slack_channel, text: game.build_slack_new_turn_message(event.data), as_user: false, icon_url: gandhi_url)
     end
 
-    def maybe_notify_remainging_players(event)
+    def maybe_notify_remaining_players(event)
       game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
       return unless game && game.slack_token
       current_turn = Game::CurrentTurn.new(event_store).call("Game$#{event.data[:game_id]}")
