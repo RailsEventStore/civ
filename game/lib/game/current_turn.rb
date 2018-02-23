@@ -34,7 +34,7 @@ module Game
     def initial_state
       {
         registered_slots: {},
-        turn_timer: nil,
+        turn_timer: 0,
         turn: 0,
         ends_at: nil,
         unfinished_player_ids: []
