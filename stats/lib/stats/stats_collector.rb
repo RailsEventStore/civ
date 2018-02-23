@@ -1,6 +1,6 @@
 module Stats
   class StatsCollector
-    def initialize(event_store:)
+    def initialize(logger: nil, event_store:)
       @event_store = event_store
     end
 
@@ -15,6 +15,8 @@ module Stats
         maybe_increment_last_player_counter(player_ids)
       end
     rescue => e
+      error_message = "Error in Stats::StatsCollector: #{e.inspect}"
+      logger.warn(error_message) if logger
       raise if Rails.env.test?
     end
 
