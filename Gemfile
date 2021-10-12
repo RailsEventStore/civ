@@ -8,7 +8,7 @@ end
 ruby "2.4.1"
 
 gem 'rails', '~> 5.1.4'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.3'
 gem 'pg', '~> 0.18'
 gem 'webpacker', '~> 3.0'
 gem 'will_paginate', '~> 3.1.0'
