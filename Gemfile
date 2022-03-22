@@ -14,9 +14,9 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'slack-ruby-client'
 
-gem 'rails_event_store',       github: 'RailsEventStore/rails_event_store'
-gem 'rails_event_store-rspec', github: 'RailsEventStore/rails_event_store'
-gem 'bounded_context',         github: 'RailsEventStore/rails_event_store'
+gem 'rails_event_store',       '~> 0.20.0'
+gem 'rails_event_store-rspec', '~> 0.20.0'
+gem 'bounded_context',         '~> 0.20.0' 
 
 group :development, :test do
   gem 'byebug', platform: :mri
