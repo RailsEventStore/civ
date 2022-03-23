@@ -11,7 +11,7 @@ gem "rails", "~> 5.2.7"
 gem "bootsnap"
 gem "puma"
 gem "pg"
-gem "will_paginate", "~> 3.1.0"
+gem "will_paginate", "~> 3.1"
 
 gem "slack-ruby-client"
 

@@ -192,7 +192,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    will_paginate (3.1.6)
+    will_paginate (3.3.1)
 
 PLATFORMS
   ruby
@@ -210,7 +210,7 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   slack-ruby-client
   webmock (~> 3.1)
-  will_paginate (~> 3.1.0)
+  will_paginate (~> 3.1)
 
 RUBY VERSION
    ruby 2.7.5p203
