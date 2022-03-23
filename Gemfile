@@ -8,7 +8,7 @@ end
 ruby "2.7.5"
 
 gem "rails", "~> 5.1.4"
-gem "puma", "~> 3.7"
+gem "puma"
 gem "pg", "~> 0.18"
 gem "will_paginate", "~> 3.1.0"
 
