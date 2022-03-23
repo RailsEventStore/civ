@@ -1,11 +1,11 @@
-require_relative '../spec_helper'
+require_relative "../spec_helper"
 
 module Game
   RSpec.describe Service do
     include InMemoryEventStore
 
     def game_id
-      'c1f89f49-ec8f-422e-a858-6c9bb1f2fce0'
+      "c1f89f49-ec8f-422e-a858-6c9bb1f2fce0"
     end
 
     def game_stream
@@ -13,7 +13,7 @@ module Game
     end
 
     def player_id
-      '7f27f9b8-38fd-4c1d-b26d-fd7193ac1be4'
+      "7f27f9b8-38fd-4c1d-b26d-fd7193ac1be4"
     end
 
     def slot_id

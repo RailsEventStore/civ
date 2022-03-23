@@ -1,6 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
-path = Rails.root.join('stats/spec')
-Dir.glob("#{path}/**/*_spec.rb") do |file|
-  require file
-end
+path = Rails.root.join("stats/spec")
+Dir.glob("#{path}/**/*_spec.rb") { |file| require file }

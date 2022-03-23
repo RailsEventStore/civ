@@ -24,7 +24,12 @@ module Notifications
       game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
       return unless game && game.slack_token
       client = Slack::Web::Client.new(token: game.slack_token)
-      client.chat_postMessage(channel: game.slack_channel, text: game.build_slack_new_turn_message(event.data), as_user: false, icon_url: gandhi_url)
+      client.chat_postMessage(
+        channel: game.slack_channel,
+        text: game.build_slack_new_turn_message(event.data),
+        as_user: false,
+        icon_url: gandhi_url
+      )
     end
 
     def maybe_notify_remaining_players(event)
@@ -32,11 +37,16 @@ module Notifications
       return unless game && game.slack_token
       current_turn = Game::CurrentTurn.new(event_store).call("Game$#{event.data[:game_id]}")
       if current_turn.unfinished_player_ids.size <= game.number_of_remaining_players_to_notify
-        remaining_players_mentions = Player.where(id: current_turn.unfinished_player_ids).map do |player|
-          "<@#{player.slack_name}>"
-        end.join(" ")
+        remaining_players_mentions =
+          Player.where(id: current_turn.unfinished_player_ids).map { |player| "<@#{player.slack_name}>" }.join(" ")
         client = Slack::Web::Client.new(token: game.slack_token)
-        response = client.chat_postMessage(channel: game.slack_channel, text: "Turn " + remaining_players_mentions, as_user: false, icon_url: gandhi_url)
+        response =
+          client.chat_postMessage(
+            channel: game.slack_channel,
+            text: "Turn " + remaining_players_mentions,
+            as_user: false,
+            icon_url: gandhi_url
+          )
         logger.warn("Slack response: #{response.pretty_inspect}") if logger
       end
     end

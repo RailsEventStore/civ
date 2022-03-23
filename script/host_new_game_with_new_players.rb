@@ -15,7 +15,16 @@ Player.create!(steam_name: "halkye", slack_name: "halki")
 Player.create!(steam_name: "The Rubyist", slack_name: "samsonmiodek")
 
 #register players
-["halkye", "tango_mig", "pan_sarin", "swistak35", "The Rubyist", "jura55", "jamesworthy", "dysk"].each_with_index do |steam_name, index|
+[
+  "halkye",
+  "tango_mig",
+  "pan_sarin",
+  "swistak35",
+  "The Rubyist",
+  "jura55",
+  "jamesworthy",
+  "dysk"
+].each_with_index do |steam_name, index|
   player = Player.find_by(steam_name: steam_name)
   command = Game::RegisterPlayer.new(game_id, player.id, index)
   service.register_player(command)

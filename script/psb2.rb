@@ -1,18 +1,22 @@
 require "net/http"
 
 def contains_relevant_data?(line)
-  line.match(/DBG: Game Turn/) || line.match(/NetTurnComplete/) || line.match(/NetTurnUnready/) || line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/)
+  line.match(/DBG: Game Turn/) || line.match(/NetTurnComplete/) || line.match(/NetTurnUnready/) ||
+    line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/)
 end
 
 def send_data(game_name:, value:, entry_type:, timestamp:)
   http = Net::HTTP.new("fierce-reaches-40697.herokuapp.com")
 
   request = Net::HTTP::Post.new("/pitboss_entries")
-  request.set_form_data({
-    "pitboss_entry[game_name]" => game_name,
-    "pitboss_entry[value]" => value,
-    "pitboss_entry[entry_type]" => entry_type,
-    "pitboss_entry[timestamp]" => timestamp})
+  request.set_form_data(
+    {
+      "pitboss_entry[game_name]" => game_name,
+      "pitboss_entry[value]" => value,
+      "pitboss_entry[entry_type]" => entry_type,
+      "pitboss_entry[timestamp]" => timestamp
+    }
+  )
   response = http.request(request)
   puts response.inspect
 end

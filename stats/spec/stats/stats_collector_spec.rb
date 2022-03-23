@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require_relative "../spec_helper"
 
 module Stats
   RSpec.describe StatsCollector do
@@ -9,21 +9,19 @@ module Stats
     end
 
     def player_1
-      '12692a52-2424-1245-ba4c-22f095124cf4'
+      "12692a52-2424-1245-ba4c-22f095124cf4"
     end
 
     def player_2
-      '95692a5a-04c4-4467-b1dc-76b095a76c4b'
+      "95692a5a-04c4-4467-b1dc-76b095a76c4b"
     end
 
     def player_3
-      '91488a8d-0e55-43e8-a95a-84ea0122cd0f'
+      "91488a8d-0e55-43e8-a95a-84ea0122cd0f"
     end
 
     def given(*domain_events)
-      domain_events.each do |domain_event|
-        event_store.publish_event(domain_event, stream_name: "Game$#{game_id}")
-      end
+      domain_events.each { |domain_event| event_store.publish_event(domain_event, stream_name: "Game$#{game_id}") }
     end
 
     specify "increment turns taken for players & turns last for the last one" do
@@ -35,7 +33,7 @@ module Stats
         Game::NewTurnStarted.new(data: { turn: 1, game_id: game_id }),
         Game::PlayerEndedTurn.new(data: { slot: 3, game_id: game_id }),
         Game::PlayerEndedTurn.new(data: { slot: 2, game_id: game_id }),
-        Game::PlayerDisconnected.new(data: { slot: 2, game_id: game_id }),
+        Game::PlayerDisconnected.new(data: { slot: 2, game_id: game_id })
       )
 
       expect(ReadModel::PlayerStat.find_by(player_id: player_1).turns_taken).to eq(1)

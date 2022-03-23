@@ -1,12 +1,11 @@
 require "net/http"
 
 module LogsParser
-    class Service
-
+  class Service
     Result = Struct.new(:game_name, :entry_type, :data, :timestamp)
 
     def initialize(game_name, players_count)
-      @game_name     = game_name
+      @game_name = game_name
       @players_count = players_count
     end
 
@@ -39,11 +38,8 @@ module LogsParser
     attr_reader :game_name, :players_count
 
     def contains_relevant_data?(line)
-      line.match(/DBG: Game Turn/)     ||
-        line.match(/:NetTurnComplete/) ||
-        line.match(/NetTurnUnready/)   ||
-        line.match(/NetPlayerReady/)   ||
-        line.match(/ConnectionClosed Player\(\d\)/)
+      line.match(/DBG: Game Turn/) || line.match(/:NetTurnComplete/) || line.match(/NetTurnUnready/) ||
+        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/)
     end
 
     def split_log_line(line)
@@ -75,7 +71,7 @@ module LogsParser
 
   class HttpAdapter
     NetworkError = Class.new(StandardError)
-    ServerError  = Class.new(StandardError)
+    ServerError = Class.new(StandardError)
 
     def initialize(host:)
       @http = Net::HTTP.new(host)
@@ -83,20 +79,27 @@ module LogsParser
 
     def send_data(payload)
       request = Net::HTTP::Post.new("/pitboss_entries")
-      request.set_form_data({
-        "pitboss_entry[game_name]"  => payload.game_name,
-        "pitboss_entry[value]"      => payload.data,
-        "pitboss_entry[entry_type]" => payload.entry_type,
-        "pitboss_entry[timestamp]"  => payload.timestamp})
+      request.set_form_data(
+        {
+          "pitboss_entry[game_name]" => payload.game_name,
+          "pitboss_entry[value]" => payload.data,
+          "pitboss_entry[entry_type]" => payload.entry_type,
+          "pitboss_entry[timestamp]" => payload.timestamp
+        }
+      )
       response = http.request(request)
-      unless response.code_type == Net::HTTPNoContent
-        raise ServerError, response.code
-      end
+      raise ServerError, response.code unless response.code_type == Net::HTTPNoContent
       return response
-    rescue Timeout::Error, EOFError, Errno::EINVAL,
-      Errno::ECONNRESET, Errno::ETIMEDOUT, Errno::ECONNREFUSED,
-      Errno::EHOSTUNREACH, SocketError, Net::ProtocolError => e
-        raise NetworkError, e.message
+    rescue Timeout::Error,
+           EOFError,
+           Errno::EINVAL,
+           Errno::ECONNRESET,
+           Errno::ETIMEDOUT,
+           Errno::ECONNREFUSED,
+           Errno::EHOSTUNREACH,
+           SocketError,
+           Net::ProtocolError => e
+      raise NetworkError, e.message
     end
 
     private

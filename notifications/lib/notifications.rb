@@ -1,4 +1,4 @@
 module Notifications
 end
 
-require 'notifications/slack_notifier'
+require "notifications/slack_notifier"

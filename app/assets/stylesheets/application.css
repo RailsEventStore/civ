@@ -174,7 +174,8 @@ textarea {
  */
 
 button,
-input { /* 1 */
+input {
+  /* 1 */
   overflow: visible;
 }
 
@@ -184,7 +185,8 @@ input { /* 1 */
  */
 
 button,
-select { /* 1 */
+select {
+  /* 1 */
   text-transform: none;
 }
 
@@ -349,33 +351,34 @@ template {
 }
 
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    padding: 2rem 4rem;
+  padding: 2rem 4rem;
 }
 
 html {
-    color: #343a40;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    font-size: 62.5%;
-    line-height: 1.6;
-    font-feature-settings: "kern", "liga", "pnum";
-    -webkit-font-smoothing: antialiased;
+  color: #343a40;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+    sans-serif;
+  font-size: 62.5%;
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga", "pnum";
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-    font-size: 1.6rem;
+  font-size: 1.6rem;
 }

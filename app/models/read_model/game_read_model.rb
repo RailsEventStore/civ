@@ -1,12 +1,9 @@
 module ReadModel
   class GameReadModel < ApplicationRecord
-    self.table_name = 'read_model_games'
+    self.table_name = "read_model_games"
 
     def self.handle_game_hosted(event)
-      create!(
-        id: event.data.fetch(:game_id),
-        name: 'Untitled game'
-      )
+      create!(id: event.data.fetch(:game_id), name: "Untitled game")
     end
 
     def build_slack_new_turn_message(event_data)

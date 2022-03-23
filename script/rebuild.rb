@@ -1,4 +1,4 @@
-game_id = '2d3e49d1-ff3f-4326-9e30-73463f349a84'
+game_id = "2d3e49d1-ff3f-4326-9e30-73463f349a84"
 service = Game::Service.new(Rails.configuration.event_store)
 
 RailsEventStoreActiveRecord::Event.delete_all
@@ -6,7 +6,7 @@ RailsEventStoreActiveRecord::EventInStream.delete_all
 ReadModel::GameReadModel.find(game_id).delete
 
 service.host_game(Game::HostGame.new(game_id, 24.hours))
-ReadModel::GameReadModel.where(id: game_id).update_all(name: 'arkency3')
+ReadModel::GameReadModel.where(id: game_id).update_all(name: "arkency3")
 
 %w[
   fa09c04c-6978-470d-b195-442ff9ece774

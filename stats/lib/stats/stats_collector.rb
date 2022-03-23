@@ -24,19 +24,23 @@ module Stats
 
     def increment_players_turn_counters(player_ids)
       player_ids.each do |player_id|
-        ReadModel::PlayerStat.find_or_initialize_by(player_id: player_id).tap do |stat_read_model|
-          stat_read_model.turns_taken += 1
-          stat_read_model.save!
-        end
+        ReadModel::PlayerStat
+          .find_or_initialize_by(player_id: player_id)
+          .tap do |stat_read_model|
+            stat_read_model.turns_taken += 1
+            stat_read_model.save!
+          end
       end
     end
 
     def maybe_increment_last_player_counter(player_ids)
       return unless player_ids.size == 1
-      ReadModel::PlayerStat.find_or_initialize_by(player_id: player_ids.first).tap do |stat_read_model|
-        stat_read_model.turns_last += 1
-        stat_read_model.save!
-      end
+      ReadModel::PlayerStat
+        .find_or_initialize_by(player_id: player_ids.first)
+        .tap do |stat_read_model|
+          stat_read_model.turns_last += 1
+          stat_read_model.save!
+        end
     end
 
     attr_reader :event_store

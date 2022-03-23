@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221193117) do
-
+ActiveRecord::Schema.define(version: 20_180_221_193_117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
@@ -30,8 +29,8 @@ ActiveRecord::Schema.define(version: 20180221193117) do
     t.uuid "event_id", null: false
     t.datetime "created_at", null: false
     t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
-    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
-    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
+    t.index %w[stream event_id], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
+    t.index %w[stream position], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
   end
 
   create_table "pitboss_entries", id: :serial, force: :cascade do |t|
@@ -66,5 +65,4 @@ ActiveRecord::Schema.define(version: 20180221193117) do
     t.string "ip_address"
     t.integer "number_of_remaining_players_to_notify", default: 1, null: false
   end
-
 end
