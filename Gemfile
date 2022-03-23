@@ -9,7 +9,7 @@ ruby "2.7.5"
 
 gem "rails", "~> 5.1.4"
 gem "puma"
-gem "pg", "~> 0.18"
+gem "pg"
 gem "will_paginate", "~> 3.1.0"
 
 gem "slack-ruby-client"
