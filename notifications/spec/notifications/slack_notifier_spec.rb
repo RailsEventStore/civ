@@ -38,7 +38,7 @@ module Notifications
     end
 
     def given(*domain_events)
-      domain_events.each { |domain_event| event_store.publish_event(domain_event, stream_name: "Game$#{game_id}") }
+      domain_events.each { |domain_event| event_store.publish(domain_event, stream_name: "Game$#{game_id}") }
     end
 
     specify "new turn notification" do
@@ -63,7 +63,7 @@ module Notifications
             }
           )
           .to_return(status: 200, body: { ok: true }.to_json, headers: {})
-      event_store.publish_event(event, stream_name: game_id)
+      event_store.publish(event, stream_name: game_id)
       expect(stub).to have_been_requested
     end
 

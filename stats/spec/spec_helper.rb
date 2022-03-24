@@ -16,11 +16,11 @@ module InMemoryEventStore
         .tap do |client|
           client.subscribe(
             ->(event) { Stats::StatsCollector.new(event_store: client).call(event) },
-            [Game::NewTurnStarted, Game::PlayerDisconnected]
+            to: [Game::NewTurnStarted, Game::PlayerDisconnected]
           )
           client.subscribe(
             ->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) },
-            [Game::NewTurnStarted, Game::PlayerDisconnected]
+            to: [Game::NewTurnStarted, Game::PlayerDisconnected]
           )
         end
   end

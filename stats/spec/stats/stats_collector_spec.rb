@@ -21,7 +21,7 @@ module Stats
     end
 
     def given(*domain_events)
-      domain_events.each { |domain_event| event_store.publish_event(domain_event, stream_name: "Game$#{game_id}") }
+      domain_events.each { |domain_event| event_store.publish(domain_event, stream_name: "Game$#{game_id}") }
     end
 
     specify "increment turns taken for players & turns last for the last one" do

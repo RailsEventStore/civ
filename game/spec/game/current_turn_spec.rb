@@ -5,7 +5,7 @@ module Game
     include InMemoryEventStore
 
     def given(*domain_events)
-      domain_events.each { |domain_event| event_store.append_to_stream(domain_event, stream_name: game_id) }
+      domain_events.each { |domain_event| event_store.append(domain_event, stream_name: game_id) }
     end
 
     def game_id

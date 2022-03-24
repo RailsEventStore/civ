@@ -19,11 +19,10 @@ module Game
     private
 
     def with_game(id)
-      game = Game.new(id)
-      stream_name = "Game$#{id}"
-      game.load(stream_name, event_store: @event_store)
+      repo = AggregateRoot::Repository.new(@event_store)
+      game = repo.load(Game.new(id), stream_name = "Game$#{id}")
       yield game
-      game.store(stream_name, event_store: @event_store)
+      repo.store(game, stream_name)
     end
   end
 end
