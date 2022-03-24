@@ -14,7 +14,7 @@ gem "pg"
 gem "will_paginate", "~> 3.1"
 gem "honeybadger"
 
-gem "slack-ruby-client"
+gem "slack-ruby-client", "~> 1.0"
 
 gem "rails_event_store", "~> 1.3.1"
 gem "rails_event_store-rspec", "~> 1.3.1"
