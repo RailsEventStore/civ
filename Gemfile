@@ -12,6 +12,7 @@ gem "bootsnap"
 gem "puma"
 gem "pg"
 gem "will_paginate", "~> 3.1"
+gem "honeybadger"
 
 gem "slack-ruby-client"
 
