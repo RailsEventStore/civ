@@ -17,8 +17,8 @@ gem "sprockets-rails"
 
 gem "slack-ruby-client", "~> 1.0"
 
-gem "rails_event_store", "~> 2.0.0"
-gem "ruby_event_store-rspec", "~> 2.0.0"
+gem "rails_event_store", "~> 2.1.0"
+gem "ruby_event_store-rspec", "~> 2.1.0"
 
 group :development, :test do
   gem "byebug", platform: :mri

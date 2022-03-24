@@ -6,7 +6,7 @@ $LOAD_PATH.push File.expand_path("../../../game/lib", __FILE__)
 
 require "stats"
 require "game"
-require "rails_event_store/rspec"
+require "ruby_event_store/rspec"
 
 module InMemoryEventStore
   def event_store
