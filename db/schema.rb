@@ -2,18 +2,19 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_221_193_117) do
+ActiveRecord::Schema.define(version: 2022_03_24_224037) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
 
   create_table "event_store_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "event_type", null: false
@@ -29,8 +30,8 @@ ActiveRecord::Schema.define(version: 20_180_221_193_117) do
     t.uuid "event_id", null: false
     t.datetime "created_at", null: false
     t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
-    t.index %w[stream event_id], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
-    t.index %w[stream position], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
+    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
+    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
   end
 
   create_table "pitboss_entries", id: :serial, force: :cascade do |t|
@@ -65,4 +66,5 @@ ActiveRecord::Schema.define(version: 20_180_221_193_117) do
     t.string "ip_address"
     t.integer "number_of_remaining_players_to_notify", default: 1, null: false
   end
+
 end
