@@ -7,12 +7,13 @@ end
 
 ruby "3.0.3"
 
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 7.0.0"
 gem "bootsnap"
 gem "puma"
 gem "pg"
 gem "will_paginate", "~> 3.1"
 gem "honeybadger"
+gem "sprockets-rails"
 
 gem "slack-ruby-client", "~> 1.0"
 
