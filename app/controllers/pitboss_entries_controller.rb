@@ -1,4 +1,6 @@
 class PitbossEntriesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
     @pitboss_entries = PitbossEntry.order("id ASC").paginate(page: params[:page], per_page: 30)
   end
