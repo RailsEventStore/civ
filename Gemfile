@@ -16,9 +16,9 @@ gem "honeybadger"
 
 gem "slack-ruby-client"
 
-gem "rails_event_store", "~> 1.0.0"
-gem "rails_event_store-rspec", "~> 1.0.0"
-gem "bounded_context", "~> 1.0.0"
+gem "rails_event_store", "~> 1.3.1"
+gem "rails_event_store-rspec", "~> 1.3.1"
+gem "bounded_context", "~> 1.3.1"
 
 group :development, :test do
   gem "byebug", platform: :mri
