@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_24_225358) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_25_002959) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,12 +43,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_225358) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "event_store_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "event_store_events", id: :serial, force: :cascade do |t|
+    t.uuid "event_id", null: false
     t.string "event_type", null: false
     t.text "metadata"
     t.text "data", null: false
     t.datetime "created_at", precision: nil, null: false
+    t.datetime "valid_at", precision: nil
     t.index ["created_at"], name: "index_event_store_events_on_created_at"
+    t.index ["event_id"], name: "index_event_store_events_on_event_id", unique: true
+    t.index ["valid_at"], name: "index_event_store_events_on_valid_at"
   end
 
   create_table "event_store_events_in_streams", id: :serial, force: :cascade do |t|
