@@ -5,20 +5,18 @@
 <table>
   <thead>
     <tr>
-      <th>Slothfulness</th>
+      <th>Id</th>
       <th>Steam name</th>
       <th>Slack name</th>
-      <th>Id</th>
     </tr>
   </thead>
 
   <tbody>
     <% @players.each do |player| %>
       <tr>
-        <td><%= player.slothfulness %></td>
+        <td><%= player.id %></td>
         <td><%= player.steam_name %></td>
         <td><%= player.slack_name %></td>
-        <td><%= player.id %></td>
       </tr>
     <% end %>
   </tbody>
