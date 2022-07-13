@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :games
   resources :players
   resources :pitboss_entries, only: %i[create index]
+  resources :player_stats, only: %[index]
 end

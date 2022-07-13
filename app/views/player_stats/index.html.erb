@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Players</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Steam name</th>
+      <th>Slothfulness</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.steam_name %></td>
+        <td><%= player.slothfulness %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
