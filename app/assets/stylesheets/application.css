@@ -22,6 +22,22 @@ html {
 
 body {
   margin: 0;
+  background-color: white;
+  color: black;
+  opacity: 0.87;
+}
+
+
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    margin: 0;
+    background-color: #121212;
+    color: white;
+    opacity: 0.87;
+  }
+  a:link { color: lightskyblue; }
+  a:visited { color: lightskyblue; }
+  a:hover { color: lightsteelblue; }
 }
 
 /**
