@@ -38,7 +38,7 @@ module Notifications
       current_turn = Game::CurrentTurn.new(event_store).call("Game$#{event.data[:game_id]}")
       if current_turn.unfinished_player_ids.size <= game.number_of_remaining_players_to_notify
         remaining_players_mentions =
-          Player.where(id: current_turn.unfinished_player_ids).map { |player| "<@#{player.slack_name}>" }.join(" ")
+          Player.where(id: current_turn.unfinished_player_ids).map { |player| "<@#{player.slack_id}>" }.join(" ")
         client = Slack::Web::Client.new(token: game.slack_token)
         response =
           client.chat_postMessage(

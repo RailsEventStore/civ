@@ -7,6 +7,7 @@ $LOAD_PATH.push File.expand_path("../../../game/lib", __FILE__)
 require "notifications"
 require "game"
 require "ruby_event_store/rspec"
+require "rails_helper"
 
 module InMemoryEventStore
   def event_store
@@ -16,7 +17,7 @@ module InMemoryEventStore
         .tap do |client|
           client.subscribe(
             ->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) },
-            [Game::NewTurnStarted, Game::PlayerDisconnected]
+            to:  [Game::NewTurnStarted, Game::PlayerDisconnected]
           )
         end
   end

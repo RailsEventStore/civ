@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_25_002959) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_03_210640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_25_002959) do
     t.string "slack_name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "slack_identifier"
   end
 
   create_table "read_model_games", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

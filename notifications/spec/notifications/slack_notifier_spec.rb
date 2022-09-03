@@ -104,7 +104,7 @@ module Notifications
 
     specify "ping multiple remaining players" do
       player_1 = Player.create!(steam_name: "some_player", slack_name: "slack_user")
-      player_2 = Player.create!(steam_name: "anohter_player", slack_name: "anohter_player")
+      player_2 = Player.create!(steam_name: "anohter_player", slack_name: "anohter_player", slack_identifier: "some_hidden_identifier")
       ReadModel::GameReadModel.find_or_create_by!(
         id: game_id,
         slack_token: game_slack_token,
@@ -121,7 +121,7 @@ module Notifications
               "channel" => "#arkency58",
               "icon_url" =>
                 "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
-              "text" => "Turn <@slack_user> <@anohter_player>"
+              "text" => "Turn <@slack_user> <@some_hidden_identifier>"
             },
             headers: {
               "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
