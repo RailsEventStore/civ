@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:say]
+  http_basic_authenticate_with name: "", password: Rails.application.secrets.say_password, except: :show
 
   def show
     current_turn = Game::CurrentTurn.new(Rails.configuration.event_store).call("Game$#{params[:id]}")
