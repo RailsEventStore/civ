@@ -38,8 +38,11 @@ module LogsParser
     attr_reader :game_name, :players_count
 
     def contains_relevant_data?(line)
-      line.match(/DBG: Game Turn/) || line.match(/:NetTurnComplete/) || line.match(/NetTurnUnready/) ||
-        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/)
+      line.match(/DBG: Game Turn/) ||
+        line.match(/:NetTurnComplete/) ||
+        line.match(/NetTurnUnready/) ||
+        line.match(/NetPlayerReady/) ||
+        line.match(/ConnectionClosed Player\(\d\)/)
     end
 
     def split_log_line(line)
@@ -77,8 +80,9 @@ module LogsParser
       @http = Net::HTTP.new(host)
     end
 
-    def send_data(payload)
+    def send_data(payload, basic_password)
       request = Net::HTTP::Post.new("/pitboss_entries")
+      request.basic_auth("", basic_password)
       request.set_form_data(
         {
           "pitboss_entry[game_name]" => payload.game_name,
@@ -90,15 +94,7 @@ module LogsParser
       response = http.request(request)
       raise ServerError, response.code unless response.code_type == Net::HTTPNoContent
       return response
-    rescue Timeout::Error,
-           EOFError,
-           Errno::EINVAL,
-           Errno::ECONNRESET,
-           Errno::ETIMEDOUT,
-           Errno::ECONNREFUSED,
-           Errno::EHOSTUNREACH,
-           SocketError,
-           Net::ProtocolError => e
+    rescue Timeout::Error, EOFError, Errno::EINVAL, Errno::ECONNRESET, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Errno::EHOSTUNREACH, SocketError, Net::ProtocolError => e
       raise NetworkError, e.message
     end
 

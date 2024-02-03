@@ -1,5 +1,6 @@
 class PitbossEntriesController < ApplicationController
   skip_before_action :verify_authenticity_token
+  http_basic_authenticate_with name: "", password: Rails.application.secrets.pitboss_entries_password
 
   def index
     @pitboss_entries = PitbossEntry.order("id ASC").paginate(page: params[:page], per_page: 30)

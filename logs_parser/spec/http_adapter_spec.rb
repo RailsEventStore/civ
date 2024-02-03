@@ -3,7 +3,7 @@ require_relative "spec_helper"
 RSpec.describe LogsParser::HttpAdapter do
   Payload = Struct.new(:game_name, :entry_type, :data, :timestamp)
 
-  specify "send_data happy path" do
+  specify("send_data happy path") do
     stub_request(:post, "http://fierce-something.com/pitboss_entries")
       .with(
         body: {
@@ -19,14 +19,15 @@ RSpec.describe LogsParser::HttpAdapter do
 
     adapter = LogsParser::HttpAdapter.new(host: "fierce-something.com")
     payload = Payload.new("arkency123", "NewTurnStarted", "7", "1234.56")
+    basic_password = "password1234"
 
-    response = adapter.send_data(payload)
+    response = adapter.send_data(payload, basic_password)
 
-    expect(response.code).to eq("204")
-    expect(response.code_type).to eq(Net::HTTPNoContent)
+    expect(response.code).to(eq("204"))
+    expect(response.code_type).to(eq(Net::HTTPNoContent))
   end
 
-  specify "send_data server error" do
+  specify("send_data server error") do
     stub_request(:post, "http://fierce-something.com/pitboss_entries")
       .with(
         body: {
@@ -42,10 +43,11 @@ RSpec.describe LogsParser::HttpAdapter do
 
     adapter = LogsParser::HttpAdapter.new(host: "fierce-something.com")
     payload = Payload.new("arkency123", "NewTurnStarted", "7", "1234.56")
-    expect { adapter.send_data(payload) }.to raise_error(LogsParser::HttpAdapter::ServerError, "500")
+    basic_password = "password1234"
+    expect { adapter.send_data(payload, basic_password) }.to(raise_error(LogsParser::HttpAdapter::ServerError, "500"))
   end
 
-  specify "send_data networkt error" do
+  specify("send_data network error") do
     stub_request(:post, "http://fierce-something.com/pitboss_entries")
       .with(
         body: {
@@ -61,6 +63,9 @@ RSpec.describe LogsParser::HttpAdapter do
 
     adapter = LogsParser::HttpAdapter.new(host: "fierce-something.com")
     payload = Payload.new("arkency123", "NewTurnStarted", "7", "1234.56")
-    expect { adapter.send_data(payload) }.to raise_error(LogsParser::HttpAdapter::NetworkError, "execution expired")
+    basic_password = "password1234"
+    expect { adapter.send_data(payload, basic_password) }.to(
+      raise_error(LogsParser::HttpAdapter::NetworkError, "execution expired")
+    )
   end
 end
