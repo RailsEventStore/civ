@@ -4,7 +4,7 @@ module ReadModel
 
     def slothfulness
       if turns_taken.to_i != 0
-        (turns_last.to_i / turns_taken.to_d).round(3)
+        (turns_last.to_i / turns_taken.to_d)
       else
         0
       end

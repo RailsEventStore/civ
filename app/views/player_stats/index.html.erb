@@ -14,7 +14,7 @@
     <% @players.each do |player| %>
       <tr>
         <td><%= player.steam_name %></td>
-        <td><%= player.slothfulness %></td>
+        <td><%= sprintf("%.3f", player.slothfulness) %></td>
       </tr>
     <% end %>
   </tbody>
