@@ -7,13 +7,15 @@ module Stats
     def call(event)
       current_turn = Game::CurrentTurn.new(event_store).call("Game$#{event.data[:game_id]}")
       player_ids = current_turn.unfinished_player_ids
+      game_id = event.data[:game_id]
       return if player_ids.empty?
       case event
       when Game::NewTurnStarted
-        increment_players_turn_counters(player_ids)
+        increment_players_turn_counters(player_ids, game_id)
       when Game::PlayerDisconnected
-        maybe_increment_last_player_counter(player_ids)
+        maybe_increment_last_player_counter(player_ids, game_id)
       end
+
     rescue => e
       error_message = "Error in Stats::StatsCollector: #{e.inspect}"
       logger.warn(error_message) if logger
@@ -22,10 +24,19 @@ module Stats
 
     private
 
-    def increment_players_turn_counters(player_ids)
+    def increment_players_turn_counters(player_ids, game_id)
       player_ids.each do |player_id|
         ReadModel::PlayerStat
-          .find_or_initialize_by(player_id: player_id)
+          .find_or_initialize_by(player_id: player_id, game_id: "all")
+          .tap do |stat_read_model|
+            stat_read_model.turns_taken += 1
+            stat_read_model.save!
+          end
+      end
+
+      player_ids.each do |player_id|
+        ReadModel::PlayerStat
+          .find_or_initialize_by(player_id: player_id, game_id: game_id)
           .tap do |stat_read_model|
             stat_read_model.turns_taken += 1
             stat_read_model.save!
@@ -33,10 +44,17 @@ module Stats
       end
     end
 
-    def maybe_increment_last_player_counter(player_ids)
+    def maybe_increment_last_player_counter(player_ids, game_id)
       return unless player_ids.size == 1
       ReadModel::PlayerStat
-        .find_or_initialize_by(player_id: player_ids.first)
+        .find_or_initialize_by(player_id: player_ids.first, game_id: "all")
+        .tap do |stat_read_model|
+          stat_read_model.turns_last += 1
+          stat_read_model.save!
+        end
+
+      ReadModel::PlayerStat
+        .find_or_initialize_by(player_id: player_ids.first, game_id: game_id)
         .tap do |stat_read_model|
           stat_read_model.turns_last += 1
           stat_read_model.save!

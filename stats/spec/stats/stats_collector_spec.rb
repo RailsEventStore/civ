@@ -24,25 +24,33 @@ module Stats
       domain_events.each { |domain_event| event_store.publish(domain_event, stream_name: "Game$#{game_id}") }
     end
 
-    specify "increment turns taken for players & turns last for the last one" do
+    specify("increment turns taken for players & turns last for the last one") do
       given(
-        Game::GameHosted.new(data: { turn_timer: 24.hours, game_id: game_id }),
-        Game::PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        Game::PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        Game::PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        Game::NewTurnStarted.new(data: { turn: 1, game_id: game_id }),
-        Game::PlayerEndedTurn.new(data: { slot: 3, game_id: game_id }),
-        Game::PlayerEndedTurn.new(data: { slot: 2, game_id: game_id }),
-        Game::PlayerDisconnected.new(data: { slot: 2, game_id: game_id })
+        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        Game::NewTurnStarted.new(data: {turn: 1, game_id: game_id}),
+        Game::PlayerEndedTurn.new(data: {slot: 3, game_id: game_id}),
+        Game::PlayerEndedTurn.new(data: {slot: 2, game_id: game_id}),
+        Game::PlayerDisconnected.new(data: {slot: 2, game_id: game_id})
       )
 
-      expect(ReadModel::PlayerStat.find_by(player_id: player_1).turns_taken).to eq(1)
-      expect(ReadModel::PlayerStat.find_by(player_id: player_2).turns_taken).to eq(1)
-      expect(ReadModel::PlayerStat.find_by(player_id: player_3).turns_taken).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_1, game_id: "all").turns_taken).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_2, game_id: "all").turns_taken).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_3, game_id: "all").turns_taken).to eq(1)
 
-      expect(ReadModel::PlayerStat.find_by(player_id: player_1).turns_last).to eq(1)
-      expect(ReadModel::PlayerStat.find_by(player_id: player_2).turns_last).to eq(0)
-      expect(ReadModel::PlayerStat.find_by(player_id: player_3).turns_last).to eq(0)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_1, game_id: game_id).turns_taken).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_2, game_id: game_id).turns_taken).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_3, game_id: game_id).turns_taken).to eq(1)
+
+      expect(ReadModel::PlayerStat.find_by(player_id: player_1, game_id: "all").turns_last).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_2, game_id: "all").turns_last).to eq(0)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_3, game_id: "all").turns_last).to eq(0)
+
+      expect(ReadModel::PlayerStat.find_by(player_id: player_1, game_id: game_id).turns_last).to eq(1)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_2, game_id: game_id).turns_last).to eq(0)
+      expect(ReadModel::PlayerStat.find_by(player_id: player_3, game_id: game_id).turns_last).to eq(0)
     end
   end
 end
