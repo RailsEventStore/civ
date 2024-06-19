@@ -9,6 +9,7 @@ module Game
   GameHosted = Class.new(DomainEvent)
   PlayerRegistered = Class.new(DomainEvent)
   PlayerUnregistered = Class.new(DomainEvent)
+  PlayerSlotfhulnessIncreased = Class.new(DomainEvent)
 
   HostGame = Struct.new(:game_id, :turn_timer)
   RegisterPlayer = Struct.new(:game_id, :player_id, :slot_id)

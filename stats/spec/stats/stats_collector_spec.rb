@@ -33,7 +33,8 @@ module Stats
         Game::NewTurnStarted.new(data: {turn: 1, game_id: game_id}),
         Game::PlayerEndedTurn.new(data: {slot: 3, game_id: game_id}),
         Game::PlayerEndedTurn.new(data: {slot: 2, game_id: game_id}),
-        Game::PlayerDisconnected.new(data: {slot: 2, game_id: game_id})
+        Game::PlayerDisconnected.new(data: {slot: 2, game_id: game_id}),
+        Game::PlayerDisconnected.new(data: {slot: 3, game_id: game_id})
       )
 
       expect(ReadModel::PlayerStat.find_by(player_id: player_1, game_id: "all").turns_taken).to eq(1)

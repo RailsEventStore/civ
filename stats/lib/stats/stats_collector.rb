@@ -13,13 +13,12 @@ module Stats
       when Game::NewTurnStarted
         increment_players_turn_counters(player_ids, game_id)
       when Game::PlayerDisconnected
-        maybe_increment_last_player_counter(player_ids, game_id)
+        maybe_increment_last_player_counter(player_ids, game_id, current_turn.turn)
       end
-
-    rescue => e
-      error_message = "Error in Stats::StatsCollector: #{e.inspect}"
-      logger.warn(error_message) if logger
-      raise if Rails.env.test?
+      #rescue => e
+      #  error_message = "Error in Stats::StatsCollector: #{e.inspect}"
+      #  logger.warn(error_message) if logger
+      #  raise if Rails.env.test?
     end
 
     private
@@ -44,7 +43,9 @@ module Stats
       end
     end
 
-    def maybe_increment_last_player_counter(player_ids, game_id)
+    def maybe_increment_last_player_counter(player_ids, game_id, turn_number)
+      return if alread_increased?(game_id, turn_number)
+
       return unless player_ids.size == 1
       ReadModel::PlayerStat
         .find_or_initialize_by(player_id: player_ids.first, game_id: "all")
@@ -59,6 +60,24 @@ module Stats
           stat_read_model.turns_last += 1
           stat_read_model.save!
         end
+
+      publish_slothfulness_increased(game_id, turn_number)
+    end
+
+    def alread_increased?(game_id, turn_number)
+      event_store
+        .read
+        .stream("Slothfulness$#{game_id}")
+        .of_type([Game::PlayerSlotfhulnessIncreased])
+        .to_a
+        .any? { |event| event.data.fetch(:turn_number) == turn_number }
+    end
+
+    def publish_slothfulness_increased(game_id, turn_number)
+      event_store.publish(
+        Game::PlayerSlotfhulnessIncreased.new(data: {game_id: game_id, turn_number: turn_number}),
+        stream_name: "Slothfulness$#{game_id}"
+      )
     end
 
     attr_reader :event_store
