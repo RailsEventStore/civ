@@ -44,9 +44,9 @@ module Stats
     end
 
     def maybe_increment_last_player_counter(player_ids, game_id, turn_number)
+      return unless player_ids.size == 1
       return if alread_increased?(game_id, turn_number)
 
-      return unless player_ids.size == 1
       ReadModel::PlayerStat
         .find_or_initialize_by(player_id: player_ids.first, game_id: "all")
         .tap do |stat_read_model|
