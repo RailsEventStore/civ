@@ -45,7 +45,7 @@ module Stats
 
     def maybe_increment_last_player_counter(player_ids, game_id, turn_number)
       return unless player_ids.size == 1
-      return if alread_increased?(game_id, turn_number)
+      return if alread_incremented?(game_id, turn_number)
 
       ReadModel::PlayerStat
         .find_or_initialize_by(player_id: player_ids.first, game_id: "all")
@@ -64,7 +64,7 @@ module Stats
       publish_slothfulness_increased(game_id, turn_number)
     end
 
-    def alread_increased?(game_id, turn_number)
+    def alread_incremented?(game_id, turn_number)
       event_store
         .read
         .stream("Slothfulness$#{game_id}")
