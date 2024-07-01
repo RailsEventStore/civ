@@ -15,10 +15,11 @@ module Stats
       when Game::PlayerDisconnected
         maybe_increment_last_player_counter(player_ids, game_id, current_turn.turn)
       end
-      #rescue => e
-      #  error_message = "Error in Stats::StatsCollector: #{e.inspect}"
-      #  logger.warn(error_message) if logger
-      #  raise if Rails.env.test?
+
+    rescue => e
+      error_message = "Error in Stats::StatsCollector: #{e.inspect}"
+      logger.warn(error_message) if logger
+      raise if Rails.env.test?
     end
 
     private
