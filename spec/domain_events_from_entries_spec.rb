@@ -5,46 +5,46 @@ RSpec.describe "glue entries with domain events" do
     Rails.configuration.event_store
   end
 
-  specify "NewTurnStarted" do
+  specify("NewTurnStarted") do
     PitbossEntry.create(timestamp: 0, value: 61, entry_type: "NewTurnStarted", game_name: "dummy")
 
-    expect(event_store).to have_published(an_event(Game::NewTurnStarted).with_data(turn: 61))
+    expect(event_store).to(have_published(an_event(Game::NewTurnStarted).with_data(turn: 61, game_id: "dummy")))
   end
 
-  specify "PlayerEndedTurn" do
+  specify("PlayerEndedTurn") do
     PitbossEntry.create(timestamp: 0, value: 4, entry_type: "PlayerEndedTurn", game_name: "dummy")
 
-    expect(event_store).to have_published(an_event(Game::PlayerEndedTurn).with_data(slot: 4))
+    expect(event_store).to(have_published(an_event(Game::PlayerEndedTurn).with_data(slot: 4, game_id: "dummy")))
   end
 
-  specify "PlayerEndTurnCancelled" do
+  specify("PlayerEndTurnCancelled") do
     PitbossEntry.create(timestamp: 0, value: 4, entry_type: "PlayerEndTurnCancelled", game_name: "dummy")
 
-    expect(event_store).to have_published(an_event(Game::PlayerEndTurnCancelled).with_data(slot: 4))
+    expect(event_store).to(have_published(an_event(Game::PlayerEndTurnCancelled).with_data(slot: 4, game_id: "dummy")))
   end
 
-  specify "PlayerConnected" do
+  specify("PlayerConnected") do
     PitbossEntry.create(timestamp: 0, value: 4, entry_type: "PlayerConnected", game_name: "dummy")
 
-    expect(event_store).to have_published(an_event(Game::PlayerConnected).with_data(slot: 4))
+    expect(event_store).to(have_published(an_event(Game::PlayerConnected).with_data(slot: 4, game_id: "dummy")))
   end
 
-  specify "PlayerDisconnected" do
+  specify("PlayerDisconnected") do
     PitbossEntry.create(timestamp: 0, value: 4, entry_type: "PlayerDisconnected", game_name: "dummy")
 
-    expect(event_store).to have_published(an_event(Game::PlayerDisconnected).with_data(slot: 4))
+    expect(event_store).to(have_published(an_event(Game::PlayerDisconnected).with_data(slot: 4, game_id: "dummy")))
   end
 
   specify do
     PitbossEntry.create(timestamp: 0, value: 4, entry_type: "PlayerDisconnected", game_name: "dummy")
     PitbossEntry.last.update(entry_type: "PlayerConnected")
 
-    expect(event_store).not_to have_published(an_event(Game::PlayerConnected))
+    expect(event_store).not_to(have_published(an_event(Game::PlayerConnected)))
   end
 
   specify do
     PitbossEntry.new(timestamp: 0, value: 4, entry_type: "PlayerDisconnected", game_name: "dummy")
 
-    expect(event_store).not_to have_published(an_event(Game::PlayerDisconnected))
+    expect(event_store).not_to(have_published(an_event(Game::PlayerDisconnected)))
   end
 end
