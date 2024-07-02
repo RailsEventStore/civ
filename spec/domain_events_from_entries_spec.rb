@@ -7,7 +7,6 @@ RSpec.describe "glue entries with domain events" do
 
   specify("NewTurnStarted") do
     PitbossEntry.create(timestamp: 0, value: 61, entry_type: "NewTurnStarted", game_name: "dummy")
-
     expect(event_store).to(have_published(an_event(Game::NewTurnStarted).with_data(turn: 61, game_id: "dummy")))
   end
 

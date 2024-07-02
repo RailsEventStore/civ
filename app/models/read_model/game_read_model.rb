@@ -2,13 +2,29 @@ module ReadModel
   class GameReadModel < ApplicationRecord
     self.table_name = "read_model_games"
 
+    serialize :current_turn
+    serialize :unified_player_details
+
     def self.handle_game_hosted(event)
-      create!(id: event.data.fetch(:game_id), name: "Untitled game")
+      create!(
+        id: event.data.fetch(:game_id),
+        name: "Untitled game",
+        current_turn: {timer: event.data.fetch(:turn_timer), number: 0},
+        unified_player_details: {}
+      )
     end
 
     def build_slack_new_turn_message(event_data)
       "Game #{name} Turn #{event_data[:turn]} <!channel>
 steam://run/8930/q/%2Bconnect%20#{ip_address}"
+    end
+
+    def turn
+      current_turn[:number]
+    end
+
+    def ends_at
+      current_turn[:ends_at]
     end
   end
 end

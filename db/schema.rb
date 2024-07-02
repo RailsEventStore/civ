@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_18_143445) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_02_220019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -98,6 +98,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_18_143445) do
     t.string "slack_channel"
     t.string "ip_address"
     t.integer "number_of_remaining_players_to_notify", default: 1, null: false
+    t.jsonb "current_turn", default: {}
+    t.jsonb "unfinished_player_ids", default: []
+    t.jsonb "registered_slots", default: {}
+    t.jsonb "player_ids", default: []
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

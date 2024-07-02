@@ -34,13 +34,13 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 3}),
+        PlayerEndedTurn.new(data: {slot: 2})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -50,15 +50,15 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        PlayerEndTurnCancelled.new(data: { slot: 1 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 3}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 1}),
+        PlayerEndTurnCancelled.new(data: {slot: 1})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -68,16 +68,16 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        PlayerEndTurnCancelled.new(data: { slot: 1 }),
-        PlayerEndedTurn.new(data: { slot: 1 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 3}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 1}),
+        PlayerEndTurnCancelled.new(data: {slot: 1}),
+        PlayerEndedTurn.new(data: {slot: 1})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -87,17 +87,17 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        PlayerEndTurnCancelled.new(data: { slot: 1 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        NewTurnStarted.new(data: { turn: 2 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 3}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 1}),
+        PlayerEndTurnCancelled.new(data: {slot: 1}),
+        PlayerEndedTurn.new(data: {slot: 1}),
+        NewTurnStarted.new(data: {turn: 2})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -105,15 +105,15 @@ module Game
       expect(current_turn.unfinished_player_ids).to eq([player_1, player_2, player_3])
     end
 
-    specify "multiple turn ends" do
+    specify("multiple turn ends") do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 2 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 2})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -121,17 +121,17 @@ module Game
       expect(current_turn.unfinished_player_ids).to eq([player_1, player_3])
     end
 
-    specify "player connected sets turn unfinished" do
+    specify("player connected sets turn unfinished") do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 3 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 1 }),
-        PlayerConnected.new(data: { slot: 1 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 3}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 1}),
+        PlayerConnected.new(data: {slot: 1})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
@@ -141,24 +141,24 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        NewTurnStarted.new(data: { turn: 1 }, metadata: { timestamp: Time.at(0).utc })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        NewTurnStarted.new(data: {turn: 1}, metadata: {timestamp: Time.at(0).utc})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.ends_at).to eq(Time.at(24.hours).utc)
     end
 
-    specify "player unregistered" do
+    specify("player unregistered") do
       given(
-        GameHosted.new(data: { turn_timer: 24.hours }),
-        PlayerRegistered.new(data: { slot_id: 1, player_id: player_1 }),
-        PlayerRegistered.new(data: { slot_id: 2, player_id: player_2 }),
-        PlayerRegistered.new(data: { slot_id: 3, player_id: player_3 }),
-        NewTurnStarted.new(data: { turn: 1 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerEndedTurn.new(data: { slot: 2 }),
-        PlayerUnregistered.new(data: { slot_id: 3, player_id: player_3 })
+        GameHosted.new(data: {turn_timer: 24.hours}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        NewTurnStarted.new(data: {turn: 1}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerEndedTurn.new(data: {slot: 2}),
+        PlayerUnregistered.new(data: {slot_id: 3, player_id: player_3})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
