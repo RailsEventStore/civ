@@ -3,14 +3,15 @@ module ReadModel
     self.table_name = "read_model_games"
 
     serialize :current_turn
-    serialize :unified_player_details
+    serialize :unfinished_player_ids
+    serialize :registered_slots
+    serialize :player_ids
 
     def self.handle_game_hosted(event)
       create!(
         id: event.data.fetch(:game_id),
         name: "Untitled game",
-        current_turn: {timer: event.data.fetch(:turn_timer), number: 0},
-        unified_player_details: {}
+        current_turn: {timer: event.data.fetch(:turn_timer), number: 0}
       )
     end
 
