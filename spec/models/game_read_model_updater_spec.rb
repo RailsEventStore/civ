@@ -39,6 +39,7 @@ module ReadModel
       expect(read_model.unfinished_player_ids).to eq([])
       expect(read_model.player_ids).to eq([])
       expect(read_model.ends_at).to eq(nil)
+      expect(read_model.registered_slots).to eq({})
     end
 
     specify do
@@ -55,6 +56,15 @@ module ReadModel
 
       expect(read_model.turn).to eq(1)
       expect(read_model.unfinished_player_ids).to match_array([player_1])
+      expect(read_model.registered_slots).to(
+        eq(
+          {
+            1 => "4e7b58e1-ccb9-4159-b891-48e954d1faae",
+            2 => "95692a5a-04c4-4467-b1dc-76b095a76c4b",
+            3 => "91488a8d-0e55-43e8-a95a-84ea0122cd0f"
+          }
+        )
+      )
     end
 
     specify do
@@ -174,6 +184,9 @@ module ReadModel
       expect(read_model.turn).to eq(1)
       expect(read_model.unfinished_player_ids).to eq([player_1])
       expect(read_model.player_ids).to eq([player_1, player_2, player_3])
+      expect(read_model.registered_slots).to(
+        eq({1 => "4e7b58e1-ccb9-4159-b891-48e954d1faae", 2 => "95692a5a-04c4-4467-b1dc-76b095a76c4b"})
+      )
     end
   end
 end
