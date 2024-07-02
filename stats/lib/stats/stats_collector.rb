@@ -2,6 +2,7 @@ module Stats
   class StatsCollector
     def initialize(logger: nil, event_store:)
       @event_store = event_store
+      @logger = logger
     end
 
     def call(event)
@@ -18,7 +19,7 @@ module Stats
 
     rescue => e
       error_message = "Error in Stats::StatsCollector: #{e.inspect}"
-      logger.warn(error_message) if logger
+      @logger.warn(error_message) if @logger
       raise if Rails.env.test?
     end
 
