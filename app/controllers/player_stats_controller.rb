@@ -7,8 +7,8 @@ class PlayerStatsController < ApplicationController
     relevant_players, @title = if game_id == "all"
       [Player.all, "All games"]
     else
-      players = Game::Players.new(Rails.configuration.event_store).call("Game$#{game_id}")
-      [Player.where(id: players.player_ids), ReadModel::GameReadModel.find(game_id).name.capitalize]
+      game = ReadModel::GameReadModel.find(game_id)
+      [Player.where(id: game.player_ids), ReadModel::GameReadModel.find(game_id).name.capitalize]
     end
 
     @players = relevant_players
