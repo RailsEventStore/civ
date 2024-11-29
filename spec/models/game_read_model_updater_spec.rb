@@ -31,20 +31,20 @@ module ReadModel
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id})
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id})
       )
       read_model = ReadModel::GameReadModel.find(game_id)
 
       expect(read_model.turn).to eq(0)
       expect(read_model.unfinished_player_ids).to eq([])
       expect(read_model.player_ids).to eq([])
-      expect(read_model.ends_at).to eq(nil)
+      expect(read_model.ends_at).to eq(Time.at(0))
       expect(read_model.registered_slots).to eq({})
     end
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -69,7 +69,7 @@ module ReadModel
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -86,7 +86,7 @@ module ReadModel
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -105,7 +105,7 @@ module ReadModel
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -125,7 +125,7 @@ module ReadModel
 
     specify("multiple turn ends") do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -141,7 +141,7 @@ module ReadModel
 
     specify("player connected sets turn unfinished") do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),
@@ -160,7 +160,7 @@ module ReadModel
 
     specify do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::NewTurnStarted.new(data: {turn: 1, game_id: game_id}, metadata: {timestamp: Time.at(0).utc})
       )
       read_model = ReadModel::GameReadModel.find(game_id)
@@ -170,7 +170,7 @@ module ReadModel
 
     specify("player unregistered") do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3, game_id: game_id}),

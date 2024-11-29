@@ -34,7 +34,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -50,7 +50,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -68,7 +68,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -87,7 +87,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -107,7 +107,7 @@ module Game
 
     specify("multiple turn ends") do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -123,7 +123,7 @@ module Game
 
     specify("player connected sets turn unfinished") do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
@@ -141,7 +141,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         NewTurnStarted.new(data: {turn: 1}, metadata: {timestamp: Time.at(0).utc})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)

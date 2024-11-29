@@ -4,22 +4,26 @@ module Game
   RSpec.describe Game do
     specify do
       game = Game.new(game_id)
-      game.host_game(24.hours)
+      game.host_game(24.hours.to_i)
 
-      expect(game).to have_applied(an_event(GameHosted).with_data(turn_timer: 24.hours, game_id: game_id))
+      expect(game).to have_applied(an_event(GameHosted).with_data(turn_timer: 24.hours.to_i, game_id: game_id))
     end
 
     specify do
       game = Game.new(game_id)
       game.register_player(player_id, slot_id)
 
-      expect(game).to have_applied(
-        an_event(PlayerRegistered).with_data(slot_id: slot_id, player_id: player_id, game_id: game_id)
+      expect(game).to(
+        have_applied(
+          an_event(PlayerRegistered).with_data(slot_id: slot_id, player_id: player_id, game_id: game_id)
+        )
       )
 
       game.unregister_player(player_id, slot_id)
-      expect(game).to have_applied(
-        an_event(PlayerUnregistered).with_data(slot_id: slot_id, player_id: player_id, game_id: game_id)
+      expect(game).to(
+        have_applied(
+          an_event(PlayerUnregistered).with_data(slot_id: slot_id, player_id: player_id, game_id: game_id)
+        )
       )
     end
 

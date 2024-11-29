@@ -43,7 +43,7 @@ module Game
 
     specify do
       given(
-        GameHosted.new(data: {turn_timer: 24.hours}),
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
         NewTurnStarted.new(data: {turn: 1}, metadata: {timestamp: Time.at(0).utc})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)

@@ -26,7 +26,7 @@ module Stats
 
     specify("increment turns taken for players & turns last for the last one") do
       given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours, game_id: game_id}),
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
         Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),

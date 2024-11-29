@@ -11,7 +11,7 @@ module ReadModel
       create!(
         id: event.data.fetch(:game_id),
         name: "Untitled game",
-        current_turn: {timer: event.data.fetch(:turn_timer), number: 0}
+        current_turn: {timer: event.data.fetch(:turn_timer).to_i, number: 0}
       )
     end
 
@@ -25,7 +25,7 @@ steam://run/8930/q/%2Bconnect%20#{ip_address}"
     end
 
     def ends_at
-      current_turn[:ends_at]
+      Time.at(current_turn[:ends_at].to_i)
     end
   end
 end
