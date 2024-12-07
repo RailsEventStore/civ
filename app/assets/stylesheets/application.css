@@ -398,3 +398,7 @@ html {
 body {
   font-size: 1.6rem;
 }
+
+th {
+  text-align: left;
+}
