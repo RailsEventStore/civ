@@ -16,7 +16,8 @@ class GamesController < ApplicationController
         turn: game.turn,
         unfinished_players: Player.where(id: game.unfinished_player_ids),
         time_left: time_left,
-        game_name: game.name.capitalize
+        game_name: game.name.capitalize,
+        game_id: game.id
       }
     )
   end

@@ -21,4 +21,9 @@
     <h2>Estimated time left</h2>
     <%= distance_of_time_in_words(time_left) %>
   </div>
+
+  <div class="game__player-stats-link">
+    <h2>Player stats</h2>
+    <%= link_to "Slothfulness ranking", player_stats_path(game_id: game_id) %>
+  </div>
 </div>
