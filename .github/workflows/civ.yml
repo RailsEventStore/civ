@@ -1,0 +1,35 @@
+name: "Civ app CI"
+on:
+  push:
+  pull_request:
+    branches: [ "master" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: pitboss_stats_test
+          POSTGRES_USER: civ
+          POSTGRES_PASSWORD: secret
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://civ:secret@localhost:5432/pitboss_stats_test"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # Add or replace dependency steps here
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@78c01b705fd9d5ad960d432d3a0cfa341d50e410 # v1.179.1
+        with:
+          ruby-version: '3.1.6'
+          bundler-cache: true
+      # Add or replace database setup steps here
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+      # Add or replace test runners here
+      - name: Run tests
+        run: bin/rspec
