@@ -47,9 +47,7 @@ module Notifications
       stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
         .with(
           body: {
-            "as_user" => "false",
             "channel" => "#arkency58",
-            "icon_url" => "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
             "text" => "Game  Turn 1 <!channel>\nsteam://run/8930/q/%2Bconnect%2010.4.0.28"
           },
           headers: {
@@ -71,9 +69,7 @@ module Notifications
       stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
         .with(
           body: {
-            "as_user" => "false",
             "channel" => "#arkency58",
-            "icon_url" => "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
             "text" => "Turn <@slack_user>"
           },
           headers: {
@@ -116,9 +112,7 @@ module Notifications
       stub0 = stub_request(:post, "https://slack.com/api/chat.postMessage")
         .with(
           body: {
-            "as_user" => "false",
             "channel" => "#arkency58",
-            "icon_url" => "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
             "text" => "Turn <@slack_user> <@some_hidden_identifier>"
           },
           headers: {
@@ -133,9 +127,7 @@ module Notifications
       stub1 = stub_request(:post, "https://slack.com/api/chat.postMessage")
         .with(
           body: {
-            "as_user" => "false",
             "channel" => "#arkency58",
-            "icon_url" => "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443",
             "text" => "Turn <@slack_user>"
           },
           headers: {

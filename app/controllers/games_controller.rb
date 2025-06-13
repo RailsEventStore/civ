@@ -25,11 +25,10 @@ class GamesController < ApplicationController
   def say
     text = params[:text]
     game_id = params[:game_id]
-    gandhi_url = "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443"
     game = ReadModel::GameReadModel.find_by(id: game_id)
     client = Slack::Web::Client.new(token: game.slack_token)
     begin
-      client.chat_postMessage(channel: game.slack_channel, text: text, as_user: false, icon_url: gandhi_url)
+      client.chat_postMessage(channel: game.slack_channel, text: text)
     rescue => e
       puts(e.inspect)
     end

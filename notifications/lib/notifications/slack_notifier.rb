@@ -27,8 +27,6 @@ module Notifications
       client.chat_postMessage(
         channel: game.slack_channel,
         text: game.build_slack_new_turn_message(event.data),
-        as_user: false,
-        icon_url: gandhi_url
       )
     end
 
@@ -44,15 +42,9 @@ module Notifications
           client.chat_postMessage(
             channel: game.slack_channel,
             text: "Turn " + remaining_players_mentions,
-            as_user: false,
-            icon_url: gandhi_url
           )
         logger.warn("Slack response: #{response.pretty_inspect}") if logger
       end
-    end
-
-    def gandhi_url
-      "https://vignette.wikia.nocookie.net/civilization/images/3/36/Gandhi_%28Civ5%29.png/revision/latest?cb=20121104232443"
     end
 
     attr_reader :logger, :event_store
