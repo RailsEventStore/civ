@@ -16,6 +16,7 @@ gem "honeybadger"
 gem "sprockets-rails"
 
 gem "slack-ruby-client", "~> 1.0"
+gem 'faraday-net_http_persistent'
 
 gem "rails_event_store", "~> 2.3.0"
 gem "ruby_event_store-rspec", "~> 2.3.0"
