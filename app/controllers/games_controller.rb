@@ -1,3 +1,5 @@
+require 'custom_slack_client'
+
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:say]
   http_basic_authenticate_with name: "", password: Rails.application.secrets.say_password, except: :show
@@ -26,9 +28,12 @@ class GamesController < ApplicationController
     text = params[:text]
     game_id = params[:game_id]
     game = ReadModel::GameReadModel.find_by(id: game_id)
-    client = Slack::Web::Client.new(token: game.slack_token)
     begin
-      client.chat_postMessage(channel: game.slack_channel, text: text)
+      CustomSlackClient.post_message(
+        channel: game.slack_channel,
+        text: text,
+        token: game.slack_token
+      )
     rescue => e
       puts(e.inspect)
     end

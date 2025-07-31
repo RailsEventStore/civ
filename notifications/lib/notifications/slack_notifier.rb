@@ -1,3 +1,5 @@
+require 'custom_slack_client'
+
 module Notifications
   class SlackNotifier
     def initialize(logger: nil, event_store:)
@@ -23,10 +25,10 @@ module Notifications
     def new_turn_notification(event)
       game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
       return unless game && game.slack_token
-      client = Slack::Web::Client.new(token: game.slack_token)
-      client.chat_postMessage(
+      CustomSlackClient.post_message(
         channel: game.slack_channel,
         text: game.build_slack_new_turn_message(event.data),
+        token: game.slack_token
       )
     end
 
@@ -37,13 +39,11 @@ module Notifications
       if current_turn.unfinished_player_ids.size <= game.number_of_remaining_players_to_notify
         remaining_players_mentions =
           Player.where(id: current_turn.unfinished_player_ids).map { |player| "<@#{player.slack_id}>" }.join(" ")
-        client = Slack::Web::Client.new(token: game.slack_token)
-        response =
-          client.chat_postMessage(
-            channel: game.slack_channel,
-            text: "Turn " + remaining_players_mentions,
-          )
-        logger.warn("Slack response: #{response.pretty_inspect}") if logger
+        CustomSlackClient.post_message(
+          channel: game.slack_channel,
+          text: "Turn " + remaining_players_mentions,
+          token: game.slack_token
+        )
       end
     end
 
