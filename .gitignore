@@ -23,3 +23,9 @@
 /public/packs-test
 /node_modules
 /spec/examples.txt
+
+/config/credentials/development.key
+
+/config/credentials/test.key
+
+/config/credentials/production.key

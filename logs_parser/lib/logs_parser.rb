@@ -73,8 +73,9 @@ module LogsParser
     NetworkError = Class.new(StandardError)
     ServerError = Class.new(StandardError)
 
-    def initialize(host:)
+    def initialize(host:, password: nil)
       @http = Net::HTTP.new(host)
+      @password = password
     end
 
     def send_data(payload)
@@ -87,6 +88,11 @@ module LogsParser
           "pitboss_entry[timestamp]" => payload.timestamp
         }
       )
+
+      if @password
+        request.basic_auth("", @password)
+      end
+
       response = http.request(request)
       raise ServerError, response.code unless response.code_type == Net::HTTPNoContent
       return response
@@ -104,6 +110,6 @@ module LogsParser
 
     private
 
-    attr_reader :http
+    attr_reader :http, :password
   end
 end
