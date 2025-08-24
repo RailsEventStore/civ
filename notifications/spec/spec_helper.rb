@@ -17,7 +17,7 @@ module InMemoryEventStore
         .tap do |client|
           client.subscribe(
             ->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) },
-            to:  [Game::NewTurnStarted, Game::PlayerDisconnected]
+            to:  [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset]
           )
         end
   end

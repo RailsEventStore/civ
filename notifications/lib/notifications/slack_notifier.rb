@@ -13,6 +13,8 @@ module Notifications
         new_turn_notification(event)
       when Game::PlayerDisconnected
         maybe_notify_remaining_players(event)
+      when Game::TimerReset
+        notify_about_timer_reset(event)
       end
     rescue => e
       error_message = "Error in Notifications::SlackNotifier: #{e.inspect}"
@@ -45,6 +47,18 @@ module Notifications
           token: game.slack_token
         )
       end
+    end
+
+    def notify_about_timer_reset(event)
+      game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
+      return unless game && game.slack_token
+      player_id = game.registered_slots&.dig(event.data[:slot])
+      player = Player.find(player_id) if player_id
+      CustomSlackClient.post_message(
+        channel: game.slack_channel,
+        text: game.build_slack_timer_reset_message(event.data, player),
+        token: game.slack_token
+      )
     end
 
     attr_reader :logger, :event_store

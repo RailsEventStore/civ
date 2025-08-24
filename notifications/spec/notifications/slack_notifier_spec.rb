@@ -33,7 +33,8 @@ module Notifications
         id: game_id,
         slack_token: game_slack_token,
         slack_channel: game_slack_channel,
-        ip_address: game_ip_address
+        ip_address: game_ip_address,
+        name: "Arkency 135"
       )
     end
 
@@ -48,7 +49,7 @@ module Notifications
         .with(
           body: {
             "channel" => "#arkency58",
-            "text" => "Game  Turn 1 <!channel>\nsteam://run/8930/q/%2Bconnect%2010.4.0.28"
+            "text" => "Game Arkency 135 Turn 1 <!channel>\nsteam://run/8930/q/%2Bconnect%2010.4.0.28"
           },
           headers: {
             "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
@@ -152,6 +153,37 @@ module Notifications
       )
       expect(stub0).to have_been_requested
       expect(stub1).to have_been_requested
+    end
+
+    specify("timer reset notification") do
+      player_1 = Player.create!(steam_name: "some_player", slack_name: "slack_user")
+      game = game_read_model
+      game.update!(registered_slots: { 1 => player_1.id })
+
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "The turn timer for game Arkency 135 has been reset by slack_user"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+
+      given(
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
+        Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1.id}),
+        Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
+        Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
+        Game::NewTurnStarted.new(data: {turn: 1}),
+        Game::TimerReset.new(data: {slot: 1, game_id: game_id}),
+      )
+      expect(stub).to have_been_requested
     end
   end
 end
