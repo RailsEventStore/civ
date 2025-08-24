@@ -45,5 +45,8 @@ module Game
 
     def apply_player_disconnected(_event)
     end
+
+    def apply_reset_timer(_event)
+    end
   end
 end

@@ -79,6 +79,12 @@ RSpec.describe LogsParser::Service do
     expect(result).to be_nil
   end
 
+  specify "player player connected happy path" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[3540015.559] Net RECV (1) :NetGiftUnit(Player=1, Minor=-1, UnitID=-1)\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "TimerReset", data: "1", timestamp: "3540015.559")
+  end
+
   private
 
   def expect_result(result, game_name:, entry_type:, data:, timestamp:)

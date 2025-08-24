@@ -30,6 +30,11 @@ class PitbossEntry < ApplicationRecord
         Game::PlayerDisconnected.new(data: { slot: value.to_i, game_id: game_name }),
         stream_name: "Game$#{game_name}"
       )
+    when "TimerReset"
+      event_store.publish(
+        Game::TimerReset.new(data: { slot: value.to_i, game_id: game_name }),
+        stream_name: "Game$#{game_name}"
+      )
     end
   end
 end

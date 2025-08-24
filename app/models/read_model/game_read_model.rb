@@ -20,6 +20,10 @@ module ReadModel
 steam://run/8930/q/%2Bconnect%20#{ip_address}"
     end
 
+    def build_slack_timer_reset_message(event_data)
+      "The turn timer for game #{name} has been reset"
+    end
+
     def turn
       current_turn[:number]
     end

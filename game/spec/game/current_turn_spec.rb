@@ -158,12 +158,23 @@ module Game
         NewTurnStarted.new(data: {turn: 1}),
         PlayerEndedTurn.new(data: {slot: 2}),
         PlayerEndedTurn.new(data: {slot: 2}),
-        PlayerUnregistered.new(data: {slot_id: 3, player_id: player_3})
+        PlayerUnregistered.new(data: {slot: 3, player_id: player_3})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.turn).to eq(1)
       expect(current_turn.unfinished_player_ids).to eq([player_1])
+    end
+
+    specify("timer reset") do
+      given(
+        GameHosted.new(data: {turn_timer: 24.hours.to_i}),
+        NewTurnStarted.new(data: {turn: 1}, metadata: {timestamp: Time.at(0).utc}),
+        TimerReset.new(data: {slot: 1}, metadata: {timestamp: Time.at(24.hours).utc})
+      )
+      current_turn = CurrentTurn.new(event_store).call(game_id)
+
+      expect(current_turn.ends_at).to eq(Time.at(48.hours).utc)
     end
   end
 end

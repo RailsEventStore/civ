@@ -7,7 +7,7 @@ Rails.configuration.to_prepare do
           .new(logger: Rails.logger, event_store: Rails.configuration.event_store)
           .call(event)
       end,
-      to: [Game::NewTurnStarted, Game::PlayerDisconnected]
+      to: [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset]
     )
     client.subscribe(
       -> (event) do

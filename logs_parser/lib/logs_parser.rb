@@ -29,6 +29,9 @@ module LogsParser
         elsif player_disconnected?(line)
           player_number = line.scan(/\d/)[-1]
           return Result.new(game_name, "PlayerDisconnected", player_number, timestamp)
+        elsif timer_reset?(line)
+          player_number = line.scan(/\d/)[-3]
+          return Result.new(game_name, "TimerReset", player_number, timestamp)
         end
       end
     end
@@ -39,7 +42,7 @@ module LogsParser
 
     def contains_relevant_data?(line)
       line.match(/DBG: Game Turn/) || line.match(/:NetTurnComplete/) || line.match(/NetTurnUnready/) ||
-        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/)
+        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/) || line.match(/:NetGiftUnit.+UnitID=-1/)
     end
 
     def split_log_line(line)
@@ -66,6 +69,10 @@ module LogsParser
 
     def player_disconnected?(line)
       line.match(/ConnectionClosed/)
+    end
+
+    def timer_reset?(line)
+      line.match(/:NetGiftUnit.+UnitID=-1/)
     end
   end
 

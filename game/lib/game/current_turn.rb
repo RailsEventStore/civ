@@ -20,6 +20,7 @@ module Game
         .when(PlayerEndedTurn, method(:handle_player_ended_turn))
         .when(PlayerEndTurnCancelled, method(:handle_player_end_turn_cancelled))
         .when(PlayerConnected, method(:handle_player_end_turn_cancelled))
+        .when(TimerReset, method(:handle_timer_reset))
         .run(@event_store, count: 10_000)
       Result.new(state[:turn], state[:unfinished_player_ids], state[:ends_at])
     end
@@ -65,6 +66,12 @@ module Game
 
     def handle_game_hosted(state, event)
       state[:turn_timer] = event.data.fetch(:turn_timer)
+      state
+    end
+
+    def handle_timer_reset(state, event)
+      reset_at = event.metadata.fetch(:timestamp)
+      state[:ends_at] = reset_at + state[:turn_timer]
       state
     end
   end

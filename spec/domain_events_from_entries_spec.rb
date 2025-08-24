@@ -46,4 +46,10 @@ RSpec.describe "glue entries with domain events" do
 
     expect(event_store).not_to(have_published(an_event(Game::PlayerDisconnected)))
   end
+
+  specify("TimerReset") do
+    PitbossEntry.create(timestamp: 0, value: 5, entry_type: "TimerReset", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::TimerReset).with_data(slot: 5, game_id: "dummy")))
+  end
 end
