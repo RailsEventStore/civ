@@ -175,14 +175,6 @@ module Notifications
         )
         .to_return(status: 200, body: {ok: true}.to_json, headers: {})
 
-      given(
-        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
-        Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1.id}),
-        Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
-        Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
-        Game::NewTurnStarted.new(data: {turn: 1}),
-      )
-
       timer_reset_event = Game::TimerReset.new(data: {slot: 1, game_id: game_id})
       event_store.publish(timer_reset_event, stream_name: game_id)
       expect(stub).to have_been_requested
