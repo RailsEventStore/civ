@@ -49,7 +49,6 @@ module PitbossStats
     config.active_record.yaml_column_permitted_classes = [Symbol, ActiveSupport::Duration]
 
     config.after_initialize do
-      puts Rails.configuration.active_record.yaml_column_permitted_classes
       Rails.configuration.active_record.yaml_column_permitted_classes << ActiveSupport::Duration
     end
   end
