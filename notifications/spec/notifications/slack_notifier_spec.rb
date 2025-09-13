@@ -176,7 +176,10 @@ module Notifications
         .to_return(status: 200, body: {ok: true}.to_json, headers: {})
 
       timer_reset_event = Game::TimerReset.new(data: {slot: 1, game_id: game_id})
-      event_store.publish(timer_reset_event, stream_name: game_id)
+
+      notifier = Notifications::SlackNotifier.new(logger: Rails.logger, event_store: event_store)
+      notifier.call(timer_reset_event)
+
       expect(stub).to have_been_requested
     end
   end
