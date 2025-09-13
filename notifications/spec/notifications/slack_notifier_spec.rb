@@ -181,8 +181,10 @@ module Notifications
         Game::PlayerRegistered.new(data: {slot_id: 2, player_id: player_2}),
         Game::PlayerRegistered.new(data: {slot_id: 3, player_id: player_3}),
         Game::NewTurnStarted.new(data: {turn: 1}),
-        Game::TimerReset.new(data: {slot: 1, game_id: game_id}),
       )
+
+      timer_reset_event = Game::TimerReset.new(data: {slot: 1, game_id: game_id})
+      event_store.publish(timer_reset_event, stream_name: game_id)
       expect(stub).to have_been_requested
     end
   end
