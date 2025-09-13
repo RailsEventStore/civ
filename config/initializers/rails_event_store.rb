@@ -1,5 +1,6 @@
 Rails.configuration.to_prepare do
   Rails.configuration.event_store = RailsEventStore::Client.new.tap do |client|
+    next if Rails.env.test?
     client.subscribe(-> (event) { ReadModel::GameReadModel.handle_game_hosted(event) }, to: [Game::GameHosted])
     client.subscribe(
       -> (event) do
