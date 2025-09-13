@@ -189,7 +189,9 @@ module Notifications
       puts "=== EVENT STORE DEBUG ==="
       puts "Event store class: #{event_store.class}"
       puts "Event store repository: #{event_store.instance_variable_get(:@repository).class}"
-      puts "Event store has subscribers: #{event_store.respond_to?(:subscribers) ? event_store.subscribers.any? : 'unknown'}"
+      puts "Event store same as Rails: #{event_store.object_id == Rails.configuration.event_store.object_id}"
+      puts "InMemoryEventStore included: #{self.class.included_modules.include?(InMemoryEventStore)}"
+      puts "Method source: #{method(:event_store).source_location}"
       puts "=========================="
 
       event_store.publish(timer_reset_event, stream_name: game_id)
