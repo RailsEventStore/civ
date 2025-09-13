@@ -158,7 +158,7 @@ module Game
         NewTurnStarted.new(data: {turn: 1}),
         PlayerEndedTurn.new(data: {slot: 2}),
         PlayerEndedTurn.new(data: {slot: 2}),
-        PlayerUnregistered.new(data: {slot: 3, player_id: player_3})
+        PlayerUnregistered.new(data: {slot_id: 3, player_id: player_3})
       )
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
