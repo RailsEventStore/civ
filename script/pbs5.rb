@@ -1,13 +1,20 @@
 require "net/http"
-require_relative "../logs_parser/lib/logs_parser"
+require_relative "logs_parser"
 
 class LogFileMonitor
   def initialize(log_file_path, initial_position = 0)
     @log_file_path = log_file_path
     @file_position = initial_position
-    @last_size = 0
-    @last_mtime = Time.at(0)
     @file_handle = nil
+
+    if File.exist?(@log_file_path)
+      stat = File.stat(@log_file_path)
+      @last_size = stat.size
+      @last_mtime = stat.mtime
+    else
+      @last_size = 0
+      @last_mtime = Time.at(0)
+    end
   end
 
   def file_changed?
@@ -17,10 +24,13 @@ class LogFileMonitor
     size_changed = stat.size != @last_size
     mtime_changed = stat.mtime != @last_mtime
 
-    @last_size = stat.size
-    @last_mtime = stat.mtime
-
-    size_changed || mtime_changed
+    if size_changed || mtime_changed
+      @last_size = stat.size
+      @last_mtime = stat.mtime
+      true
+    else
+      false
+    end
   end
 
   def file_rotated?
@@ -83,7 +93,7 @@ def main
   password = ARGV[2]
   initial_position = ARGV[3].to_i || 0
   host = ARGV[4] || "fierce-reaches-40697.herokuapp.com"
-  log_file_path = "net_message_debug.log"
+  log_file_path = ARGV[5] || "net_message_debug.log"
 
   unless game_name && players_count > 0 && password
     puts "Error: game_name, players_count, and password are required"
