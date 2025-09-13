@@ -15,14 +15,22 @@ module InMemoryEventStore
       RailsEventStore::Client
         .new(repository: RailsEventStore::InMemoryRepository.new)
         .tap do |client|
+          puts "=== SUBSCRIBING TO InMemoryEventStore ==="
           client.subscribe(
-            ->(event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) },
+            ->(event) {
+              puts "SlackNotifier subscriber called for #{event.class}"
+              Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event)
+            },
             to:  [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset]
           )
           client.subscribe(
-            ->(event) { ReadModel::GameReadModelUpdater.new(logger: Rails.logger).call(event) },
+            ->(event) {
+              puts "GameReadModelUpdater subscriber called for #{event.class}"
+              ReadModel::GameReadModelUpdater.new(logger: Rails.logger).call(event)
+            },
             to: [Game::PlayerRegistered]
           )
+          puts "=== SUBSCRIPTIONS COMPLETE ==="
         end
   end
 end

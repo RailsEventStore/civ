@@ -184,6 +184,14 @@ module Notifications
       )
 
       timer_reset_event = Game::TimerReset.new(data: {slot: 1, game_id: game_id})
+
+      # Debug: Check if event_store has subscribers
+      puts "=== EVENT STORE DEBUG ==="
+      puts "Event store class: #{event_store.class}"
+      puts "Event store repository: #{event_store.instance_variable_get(:@repository).class}"
+      puts "Event store has subscribers: #{event_store.respond_to?(:subscribers) ? event_store.subscribers.any? : 'unknown'}"
+      puts "=========================="
+
       event_store.publish(timer_reset_event, stream_name: game_id)
       expect(stub).to have_been_requested
     end
