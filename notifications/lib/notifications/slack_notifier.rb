@@ -38,6 +38,7 @@ module Notifications
       game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
       return unless game && game.slack_token
       current_turn = Game::CurrentTurn.new(event_store).call("Game$#{event.data[:game_id]}")
+      return if current_turn.unfinished_player_ids.size == 0
       if current_turn.unfinished_player_ids.size <= game.number_of_remaining_players_to_notify
         remaining_players_mentions =
           Player.where(id: current_turn.unfinished_player_ids).map { |player| "<@#{player.slack_id}>" }.join(" ")
