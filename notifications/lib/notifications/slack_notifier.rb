@@ -13,8 +13,6 @@ module Notifications
         new_turn_notification(event)
       when Game::PlayerDisconnected
         maybe_notify_remaining_players(event)
-      when Game::TimerReset
-        notify_about_timer_reset(event)
       when Game::CityFounded
         notify_game_event(event, "A new city has been founded in far away land")
       when Game::WarStatusChanged
