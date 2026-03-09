@@ -37,7 +37,7 @@ module LogsParser
           return Result.new(game_name, "CityFounded", player_number, timestamp)
         elsif war_declared?(line)
           player_number = line.match(/Net RECV \((\d+)\)/)[1]
-          return Result.new(game_name, "WarDeclared", player_number, timestamp)
+          return Result.new(game_name, "WarStatusChanged", player_number, timestamp)
         elsif city_conquered?(line)
           player_number = line.match(/Net RECV \((\d+)\)/)[1]
           return Result.new(game_name, "CityConquered", player_number, timestamp)

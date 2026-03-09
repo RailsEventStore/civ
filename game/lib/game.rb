@@ -12,7 +12,7 @@ module Game
   PlayerSlotfhulnessIncreased = Class.new(DomainEvent)
   TimerReset = Class.new(DomainEvent)
   CityFounded = Class.new(DomainEvent)
-  WarDeclared = Class.new(DomainEvent)
+  WarStatusChanged = Class.new(DomainEvent)
   CityConquered = Class.new(DomainEvent)
 
   HostGame = Struct.new(:game_id, :turn_timer)

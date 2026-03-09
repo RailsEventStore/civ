@@ -176,14 +176,14 @@ module Notifications
       expect(stub).to have_been_requested
     end
 
-    specify("war declared notification") do
+    specify("war status changed notification") do
       game_read_model
-      event = Game::WarDeclared.new(data: {slot: 0, game_id: game_id})
+      event = Game::WarStatusChanged.new(data: {slot: 0, game_id: game_id})
       stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
         .with(
           body: {
             "channel" => "#arkency58",
-            "text" => "A war has been declared in far away land"
+            "text" => "War status has changed in far away land"
           },
           headers: {
             "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",

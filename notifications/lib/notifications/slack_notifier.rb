@@ -17,8 +17,8 @@ module Notifications
         notify_about_timer_reset(event)
       when Game::CityFounded
         notify_game_event(event, "A new city has been founded in far away land")
-      when Game::WarDeclared
-        notify_game_event(event, "A war has been declared in far away land")
+      when Game::WarStatusChanged
+        notify_game_event(event, "War status has changed in far away land")
       when Game::CityConquered
         notify_game_event(event, "A city has been conquered in far away land")
       end

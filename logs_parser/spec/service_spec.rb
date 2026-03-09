@@ -97,10 +97,10 @@ RSpec.describe LogsParser::Service do
     expect(result).to be_nil
   end
 
-  specify "war declared" do
+  specify "war status changed" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[674000.151] Net RECV (0) :NetChangeWar : Change War, rival team is 33\n")
-    expect_result(result, game_name: "arkency_test", entry_type: "WarDeclared", data: "0", timestamp: "674000.151")
+    expect_result(result, game_name: "arkency_test", entry_type: "WarStatusChanged", data: "0", timestamp: "674000.151")
   end
 
   specify "city conquered via puppet" do

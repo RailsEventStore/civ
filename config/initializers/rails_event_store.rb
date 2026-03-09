@@ -26,7 +26,7 @@ Rails.configuration.to_prepare do
           .new(logger: Rails.logger, event_store: Rails.configuration.event_store)
           .call(event)
       end,
-      to: [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset, Game::CityFounded, Game::WarDeclared, Game::CityConquered]
+      to: [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset, Game::CityFounded, Game::WarStatusChanged, Game::CityConquered]
     )
     client.subscribe(
       -> (event) do

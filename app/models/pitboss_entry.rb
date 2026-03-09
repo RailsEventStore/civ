@@ -40,9 +40,9 @@ class PitbossEntry < ApplicationRecord
         Game::CityFounded.new(data: { slot: value.to_i, game_id: game_name }),
         stream_name: "Game$#{game_name}"
       )
-    when "WarDeclared"
+    when "WarStatusChanged"
       event_store.publish(
-        Game::WarDeclared.new(data: { slot: value.to_i, game_id: game_name }),
+        Game::WarStatusChanged.new(data: { slot: value.to_i, game_id: game_name }),
         stream_name: "Game$#{game_name}"
       )
     when "CityConquered"
