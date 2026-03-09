@@ -32,6 +32,15 @@ module LogsParser
         elsif timer_reset?(line)
           player_number = line.scan(/\d/)[-3]
           return Result.new(game_name, "TimerReset", player_number, timestamp)
+        elsif city_founded?(line)
+          player_number = line.match(/who is (\d+)/)[1]
+          return Result.new(game_name, "CityFounded", player_number, timestamp)
+        elsif war_declared?(line)
+          player_number = line.match(/Net RECV \((\d+)\)/)[1]
+          return Result.new(game_name, "WarDeclared", player_number, timestamp)
+        elsif city_conquered?(line)
+          player_number = line.match(/Net RECV \((\d+)\)/)[1]
+          return Result.new(game_name, "CityConquered", player_number, timestamp)
         end
       end
     end
@@ -42,7 +51,9 @@ module LogsParser
 
     def contains_relevant_data?(line)
       line.match(/DBG: Game Turn/) || line.match(/:NetTurnComplete/) || line.match(/NetTurnUnready/) ||
-        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/) || line.match(/:NetGiftUnit.+UnitID=-1/)
+        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/) || line.match(/:NetGiftUnit.+UnitID=-1/) ||
+        line.match(/mission is Found City/) || line.match(/:NetChangeWar/) ||
+        line.match(/TASK_CREATE_PUPPET|TASK_ANNEX|TASK_RAZE/)
     end
 
     def split_log_line(line)
@@ -73,6 +84,18 @@ module LogsParser
 
     def timer_reset?(line)
       line.match(/:NetGiftUnit.+UnitID=-1/)
+    end
+
+    def city_founded?(line)
+      line.match(/mission is Found City/)
+    end
+
+    def war_declared?(line)
+      line.match(/:NetChangeWar/)
+    end
+
+    def city_conquered?(line)
+      line.match(/TASK_CREATE_PUPPET|TASK_ANNEX|TASK_RAZE/)
     end
   end
 

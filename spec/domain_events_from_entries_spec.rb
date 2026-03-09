@@ -52,4 +52,22 @@ RSpec.describe "glue entries with domain events" do
 
     expect(event_store).to(have_published(an_event(Game::TimerReset).with_data(slot: 5, game_id: "dummy")))
   end
+
+  specify("CityFounded") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityFounded", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::CityFounded).with_data(slot: 0, game_id: "dummy")))
+  end
+
+  specify("WarDeclared") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "WarDeclared", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::WarDeclared).with_data(slot: 0, game_id: "dummy")))
+  end
+
+  specify("CityConquered") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityConquered", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy")))
+  end
 end

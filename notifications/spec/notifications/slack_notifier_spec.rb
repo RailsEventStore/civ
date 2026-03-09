@@ -155,6 +155,69 @@ module Notifications
       expect(stub1).to have_been_requested
     end
 
+    specify("city founded notification") do
+      game_read_model
+      event = Game::CityFounded.new(data: {slot: 0, game_id: game_id})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A new city has been founded in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
+    specify("war declared notification") do
+      game_read_model
+      event = Game::WarDeclared.new(data: {slot: 0, game_id: game_id})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A war has been declared in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
+    specify("city conquered notification") do
+      game_read_model
+      event = Game::CityConquered.new(data: {slot: 0, game_id: game_id})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A city has been conquered in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
     specify("timer reset notification") do
       player_1 = Player.create!(steam_name: "some_player", slack_name: "slack_user")
       game = game_read_model

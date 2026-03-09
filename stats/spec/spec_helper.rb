@@ -20,7 +20,7 @@ module InMemoryEventStore
         )
         client.subscribe(
           -> (event) { Notifications::SlackNotifier.new(logger: Rails.logger, event_store: client).call(event) },
-          to: [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset]
+          to: [Game::NewTurnStarted, Game::PlayerDisconnected, Game::TimerReset, Game::CityFounded, Game::WarDeclared, Game::CityConquered]
         )
         client.subscribe(
           ->(event) { ReadModel::GameReadModelUpdater.new(logger: Rails.logger).call(event) },

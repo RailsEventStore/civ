@@ -15,6 +15,12 @@ module Notifications
         maybe_notify_remaining_players(event)
       when Game::TimerReset
         notify_about_timer_reset(event)
+      when Game::CityFounded
+        notify_game_event(event, "A new city has been founded in far away land")
+      when Game::WarDeclared
+        notify_game_event(event, "A war has been declared in far away land")
+      when Game::CityConquered
+        notify_game_event(event, "A city has been conquered in far away land")
       end
     rescue => e
       error_message = "Error in Notifications::SlackNotifier: #{e.inspect}"
@@ -58,6 +64,16 @@ module Notifications
       CustomSlackClient.post_message(
         channel: game.slack_channel,
         text: game.build_slack_timer_reset_message(event.data, player),
+        token: game.slack_token
+      )
+    end
+
+    def notify_game_event(event, message)
+      game = ReadModel::GameReadModel.find_by(id: event.data[:game_id])
+      return unless game && game.slack_token
+      CustomSlackClient.post_message(
+        channel: game.slack_channel,
+        text: message,
         token: game.slack_token
       )
     end

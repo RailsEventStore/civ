@@ -85,6 +85,42 @@ RSpec.describe LogsParser::Service do
     expect_result(result, game_name: "arkency_test", entry_type: "TimerReset", data: "1", timestamp: "3540015.559")
   end
 
+  specify "city founded" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[672732.150] Net RECV (0) :NetPushMission : Do Mission, who is 0, unit ID is 8192 (Settler), mission is Found City, data1=-1, data2=-1, shift=false\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityFounded", data: "0", timestamp: "672732.150")
+  end
+
+  specify "city founded ignores settler move" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[672732.150] Net RECV (0) :NetPushMission : Do Mission, who is 0, unit ID is 8192 (Settler), mission is Move, data1=41, data2=32, shift=false\n")
+    expect(result).to be_nil
+  end
+
+  specify "war declared" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[674000.151] Net RECV (0) :NetChangeWar : Change War, rival team is 33\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "WarDeclared", data: "0", timestamp: "674000.151")
+  end
+
+  specify "city conquered via puppet" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITYSTATE_KUWAIT), doing task 19 (TASK_CREATE_PUPPET), data1 -1, data2 -1\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+  end
+
+  specify "city conquered via annex" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITY_NAME_WARSAW), doing task 20 (TASK_ANNEX), data1 -1, data2 -1\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+  end
+
+  specify "city conquered via raze" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITY_NAME_BERLIN), doing task 21 (TASK_RAZE), data1 -1, data2 -1\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+  end
+
   private
 
   def expect_result(result, game_name:, entry_type:, data:, timestamp:)

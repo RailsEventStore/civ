@@ -35,6 +35,21 @@ class PitbossEntry < ApplicationRecord
         Game::TimerReset.new(data: { slot: value.to_i, game_id: game_name }),
         stream_name: "Game$#{game_name}"
       )
+    when "CityFounded"
+      event_store.publish(
+        Game::CityFounded.new(data: { slot: value.to_i, game_id: game_name }),
+        stream_name: "Game$#{game_name}"
+      )
+    when "WarDeclared"
+      event_store.publish(
+        Game::WarDeclared.new(data: { slot: value.to_i, game_id: game_name }),
+        stream_name: "Game$#{game_name}"
+      )
+    when "CityConquered"
+      event_store.publish(
+        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name }),
+        stream_name: "Game$#{game_name}"
+      )
     end
   end
 end
