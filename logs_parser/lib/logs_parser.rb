@@ -38,9 +38,15 @@ module LogsParser
         elsif war_declared?(line)
           player_number = line.match(/Net RECV \((\d+)\)/)[1]
           return Result.new(game_name, "WarStatusChanged", player_number, timestamp)
-        elsif city_conquered?(line)
+        elsif city_puppeted?(line)
           player_number = line.match(/Net RECV \((\d+)\)/)[1]
-          return Result.new(game_name, "CityConquered", player_number, timestamp)
+          return Result.new(game_name, "CityPuppeted", player_number, timestamp)
+        elsif city_annexed?(line)
+          player_number = line.match(/Net RECV \((\d+)\)/)[1]
+          return Result.new(game_name, "CityAnnexed", player_number, timestamp)
+        elsif city_razing_started?(line)
+          player_number = line.match(/Net RECV \((\d+)\)/)[1]
+          return Result.new(game_name, "CityRazingStarted", player_number, timestamp)
         end
       end
     end
@@ -94,8 +100,16 @@ module LogsParser
       line.match(/:NetChangeWar/)
     end
 
-    def city_conquered?(line)
-      line.match(/TASK_CREATE_PUPPET|TASK_ANNEX|TASK_RAZE/)
+    def city_puppeted?(line)
+      line.match(/TASK_CREATE_PUPPET/)
+    end
+
+    def city_annexed?(line)
+      line.match(/TASK_ANNEX/)
+    end
+
+    def city_razing_started?(line)
+      line.match(/TASK_RAZE/)
     end
   end
 

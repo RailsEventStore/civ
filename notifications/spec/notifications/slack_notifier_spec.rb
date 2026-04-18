@@ -197,7 +197,70 @@ module Notifications
       expect(stub).to have_been_requested
     end
 
-    specify("city conquered notification") do
+    specify("city puppeted notification") do
+      game_read_model
+      event = Game::CityConquered.new(data: {slot: 0, game_id: game_id, action: "puppeted"})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A city has been puppeted in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
+    specify("city annexed notification") do
+      game_read_model
+      event = Game::CityConquered.new(data: {slot: 0, game_id: game_id, action: "annexed"})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A city has been annexed in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
+    specify("city razing started notification") do
+      game_read_model
+      event = Game::CityConquered.new(data: {slot: 0, game_id: game_id, action: "razing_started"})
+      stub = stub_request(:post, "https://slack.com/api/chat.postMessage")
+        .with(
+          body: {
+            "channel" => "#arkency58",
+            "text" => "A city is being razed in far away land"
+          },
+          headers: {
+            "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
+            "Accept" => "application/json; charset=utf-8",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Content-Type" => "application/json"
+          }
+        )
+        .to_return(status: 200, body: {ok: true}.to_json, headers: {})
+      event_store.publish(event, stream_name: game_id)
+      expect(stub).to have_been_requested
+    end
+
+    specify("city conquered notification with legacy event without action") do
       game_read_model
       event = Game::CityConquered.new(data: {slot: 0, game_id: game_id})
       stub = stub_request(:post, "https://slack.com/api/chat.postMessage")

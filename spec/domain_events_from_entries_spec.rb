@@ -65,9 +65,27 @@ RSpec.describe "glue entries with domain events" do
     expect(event_store).to(have_published(an_event(Game::WarStatusChanged).with_data(slot: 0, game_id: "dummy")))
   end
 
-  specify("CityConquered") do
+  specify("CityConquered legacy entry defaults action to conquered") do
     PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityConquered", game_name: "dummy")
 
-    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy")))
+    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy", action: "conquered")))
+  end
+
+  specify("CityPuppeted") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityPuppeted", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy", action: "puppeted")))
+  end
+
+  specify("CityAnnexed") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityAnnexed", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy", action: "annexed")))
+  end
+
+  specify("CityRazingStarted") do
+    PitbossEntry.create(timestamp: 0, value: 0, entry_type: "CityRazingStarted", game_name: "dummy")
+
+    expect(event_store).to(have_published(an_event(Game::CityConquered).with_data(slot: 0, game_id: "dummy", action: "razing_started")))
   end
 end

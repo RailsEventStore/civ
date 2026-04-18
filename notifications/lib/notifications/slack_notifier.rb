@@ -18,7 +18,7 @@ module Notifications
       when Game::WarStatusChanged
         notify_game_event(event, "War status has changed in far away land")
       when Game::CityConquered
-        notify_game_event(event, "A city has been conquered in far away land")
+        notify_game_event(event, city_conquered_message(event))
       end
     rescue => e
       error_message = "Error in Notifications::SlackNotifier: #{e.inspect}"
@@ -64,6 +64,15 @@ module Notifications
         text: game.build_slack_timer_reset_message(event.data, player),
         token: game.slack_token
       )
+    end
+
+    def city_conquered_message(event)
+      case event.data[:action]
+      when "puppeted" then "A city has been puppeted in far away land"
+      when "annexed" then "A city has been annexed in far away land"
+      when "razing_started" then "A city is being razed in far away land"
+      else "A city has been conquered in far away land"
+      end
     end
 
     def notify_game_event(event, message)

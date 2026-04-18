@@ -103,22 +103,22 @@ RSpec.describe LogsParser::Service do
     expect_result(result, game_name: "arkency_test", entry_type: "WarStatusChanged", data: "0", timestamp: "674000.151")
   end
 
-  specify "city conquered via puppet" do
+  specify "city puppeted" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITYSTATE_KUWAIT), doing task 19 (TASK_CREATE_PUPPET), data1 -1, data2 -1\n")
-    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityPuppeted", data: "0", timestamp: "674043.151")
   end
 
-  specify "city conquered via annex" do
+  specify "city annexed" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITY_NAME_WARSAW), doing task 20 (TASK_ANNEX), data1 -1, data2 -1\n")
-    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityAnnexed", data: "0", timestamp: "674043.151")
   end
 
-  specify "city conquered via raze" do
+  specify "city razing started" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[674043.151] Net RECV (0) :NetDoTask : City ID 16385 (TXT_KEY_CITY_NAME_BERLIN), doing task 21 (TASK_RAZE), data1 -1, data2 -1\n")
-    expect_result(result, game_name: "arkency_test", entry_type: "CityConquered", data: "0", timestamp: "674043.151")
+    expect_result(result, game_name: "arkency_test", entry_type: "CityRazingStarted", data: "0", timestamp: "674043.151")
   end
 
   private

@@ -47,7 +47,22 @@ class PitbossEntry < ApplicationRecord
       )
     when "CityConquered"
       event_store.publish(
-        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name }),
+        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name, action: "conquered" }),
+        stream_name: "Game$#{game_name}"
+      )
+    when "CityPuppeted"
+      event_store.publish(
+        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name, action: "puppeted" }),
+        stream_name: "Game$#{game_name}"
+      )
+    when "CityAnnexed"
+      event_store.publish(
+        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name, action: "annexed" }),
+        stream_name: "Game$#{game_name}"
+      )
+    when "CityRazingStarted"
+      event_store.publish(
+        Game::CityConquered.new(data: { slot: value.to_i, game_id: game_name, action: "razing_started" }),
         stream_name: "Game$#{game_name}"
       )
     end
