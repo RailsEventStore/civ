@@ -281,7 +281,7 @@ module Notifications
       expect(stub).to have_been_requested
     end
 
-    xspecify("timer reset notification - disabled") do
+    specify("timer reset notification") do
       player_1 = Player.create!(steam_name: "some_player", slack_name: "slack_user")
       game = game_read_model
       game.update!(registered_slots: { 1 => player_1.id })

@@ -79,10 +79,28 @@ RSpec.describe LogsParser::Service do
     expect(result).to be_nil
   end
 
-  specify "player player connected happy path" do
+  specify "timer reset" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[3540015.559] Net RECV (1) :NetGiftUnit(Player=1, Minor=-1, UnitID=-1)\n")
     expect_result(result, game_name: "arkency_test", entry_type: "TimerReset", data: "1", timestamp: "3540015.559")
+  end
+
+  specify "timer reset extracts player from Player= field" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[4236931.119] Net RECV (0) :NetGiftUnit(Player=0, Minor=-1, UnitID=-1)\n")
+    expect_result(result, game_name: "arkency_test", entry_type: "TimerReset", data: "0", timestamp: "4236931.119")
+  end
+
+  specify "timer reset ignores SEND echo lines" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[3540015.559] Net SEND (0, 1): size=32: NetGiftUnit(Player=1, Minor=-1, UnitID=-1)\n")
+    expect(result).to be_nil
+  end
+
+  specify "timer reset ignores gift unit events where Minor is not -1" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[4236931.119] Net RECV (3) :NetGiftUnit(Player=3, Minor=5, UnitID=-1)\n")
+    expect(result).to be_nil
   end
 
   specify "city founded" do
