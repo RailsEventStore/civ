@@ -168,6 +168,17 @@ module ReadModel
       expect(read_model.ends_at).to eq(Time.at(24.hours).utc)
     end
 
+    specify("timer reset recalculates ends_at") do
+      given(
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
+        Game::NewTurnStarted.new(data: {turn: 1, game_id: game_id}, metadata: {timestamp: Time.at(0).utc}),
+        Game::TimerReset.new(data: {slot: 1, game_id: game_id}, metadata: {timestamp: Time.at(1.hour).utc})
+      )
+      read_model = ReadModel::GameReadModel.find(game_id)
+
+      expect(read_model.ends_at).to eq(Time.at(1.hour + 24.hours).utc)
+    end
+
     specify("player unregistered") do
       given(
         Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),

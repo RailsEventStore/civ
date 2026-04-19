@@ -20,6 +20,9 @@ module ReadModel
           read_model.current_turn[:number] = event.data.fetch(:turn)
           read_model.current_turn[:ends_at] = (started_at + read_model.current_turn.fetch(:timer, 24.hours)).to_i
           read_model.unfinished_player_ids = read_model.registered_slots.values
+        when Game::TimerReset
+          reset_at = event.metadata.fetch(:timestamp)
+          read_model.current_turn[:ends_at] = (reset_at + read_model.current_turn.fetch(:timer, 24.hours)).to_i
         when Game::PlayerEndedTurn
           player_id = read_model.registered_slots[event.data.fetch(:slot).to_i]
           read_model.unfinished_player_ids.delete(player_id)

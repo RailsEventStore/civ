@@ -14,7 +14,8 @@ Rails.configuration.to_prepare do
           Game::NewTurnStarted,
           Game::PlayerEndedTurn,
           Game::PlayerEndTurnCancelled,
-          Game::PlayerConnected
+          Game::PlayerConnected,
+          Game::TimerReset
         ]
       )
       next
@@ -46,7 +47,8 @@ Rails.configuration.to_prepare do
         Game::NewTurnStarted,
         Game::PlayerEndedTurn,
         Game::PlayerEndTurnCancelled,
-        Game::PlayerConnected
+        Game::PlayerConnected,
+        Game::TimerReset
       ]
     )
   end
