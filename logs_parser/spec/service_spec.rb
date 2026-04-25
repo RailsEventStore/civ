@@ -97,6 +97,12 @@ RSpec.describe LogsParser::Service do
     expect(result).to be_nil
   end
 
+  specify "timer reset ignores gift unit events where UnitID is not -1" do
+    parser = LogsParser::Service.new("arkency_test", 6)
+    result = parser.call("[494797.896] Net RECV (4) :NetGiftUnit(Player=4, Minor=-1, UnitID=-10)\n")
+    expect(result).to be_nil
+  end
+
   specify "timer reset ignores gift unit events where Minor is not -1" do
     parser = LogsParser::Service.new("arkency_test", 6)
     result = parser.call("[4236931.119] Net RECV (3) :NetGiftUnit(Player=3, Minor=5, UnitID=-1)\n")

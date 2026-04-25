@@ -57,7 +57,7 @@ module LogsParser
 
     def contains_relevant_data?(line)
       line.match(/DBG: Game Turn/) || line.match(/:NetTurnComplete/) || line.match(/NetTurnUnready/) ||
-        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/) || line.match(/:NetGiftUnit.+Minor=-1.+UnitID=-1/) ||
+        line.match(/NetPlayerReady/) || line.match(/ConnectionClosed Player\(\d\)/) || line.match(/:NetGiftUnit.+Minor=-1.+UnitID=-1\)/) ||
         line.match(/mission is Found City/) || line.match(/:NetChangeWar/) ||
         line.match(/TASK_CREATE_PUPPET|TASK_ANNEX|TASK_RAZE/)
     end
@@ -89,7 +89,7 @@ module LogsParser
     end
 
     def timer_reset?(line)
-      line.match(/:NetGiftUnit.+Minor=-1.+UnitID=-1/)
+      line.match(/:NetGiftUnit.+Minor=-1.+UnitID=-1\)/)
     end
 
     def city_founded?(line)
