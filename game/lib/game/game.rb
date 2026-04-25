@@ -46,7 +46,16 @@ module Game
     def apply_player_disconnected(_event)
     end
 
-    def apply_reset_timer(_event)
+    def apply_timer_reset(_event)
+    end
+
+    def apply_war_status_changed(_event)
+    end
+
+    def apply_city_founded(_event)
+    end
+
+    def apply_city_conquered(_event)
     end
   end
 end
