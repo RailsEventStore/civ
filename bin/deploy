@@ -5,6 +5,9 @@ set -euo pipefail
 
 export RAILS_ENV=production
 
+# Load DATABASE_URL and friends (the app has no dotenv gem).
+set -a; source .env.production; set +a
+
 git pull
 bundle install
 bundle exec rails assets:precompile
