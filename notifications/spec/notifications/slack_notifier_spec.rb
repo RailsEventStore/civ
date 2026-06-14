@@ -49,7 +49,7 @@ module Notifications
         .with(
           body: {
             "channel" => "#arkency58",
-            "text" => "Game Arkency 135 Turn 1 <!channel>\nsteam://run/8930/q/%2Bconnect%2010.4.0.28"
+            "text" => "Game Arkency 135 Turn 1 <!channel>\n10.4.0.28"
           },
           headers: {
             "Authorization" => "Bearer xoxb-302139800755-nR1O848GLyVS5ZfNNMpBLm0b",
