@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Pull, install, precompile, migrate and restart the running app.
+# Run on the server as the `deploy` user from the app root.
+set -euo pipefail
+
+export RAILS_ENV=production
+
+git pull
+bundle install
+bundle exec rails assets:precompile
+bundle exec rails db:migrate
+sudo systemctl restart civ

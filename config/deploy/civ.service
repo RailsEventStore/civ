@@ -1,0 +1,20 @@
+# systemd unit for the Puma web process.
+# Install: sudo cp config/deploy/civ.service /etc/systemd/system/civ.service
+#          sudo systemctl daemon-reload && sudo systemctl enable --now civ
+[Unit]
+Description=civ Puma
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/home/deploy/civ
+EnvironmentFile=/home/deploy/civ/.env.production
+RuntimeDirectory=civ
+RuntimeDirectoryMode=0755
+ExecStart=/home/deploy/.rbenv/shims/bundle exec puma -C config/puma.rb
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
