@@ -37,6 +37,12 @@ Rails.configuration.to_prepare do
     )
     client.subscribe(
       -> (event) do
+        Chronicle::NarrativeBuilder.new.call(event)
+      end,
+      to: [Game::NewTurnStarted, Game::CityFounded, Game::WarStatusChanged, Game::CityConquered]
+    )
+    client.subscribe(
+      -> (event) do
         ReadModel::GameReadModelUpdater.new(logger: Rails.logger).call(
           event
         )

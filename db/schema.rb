@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_02_220019) do
+ActiveRecord::Schema[7.0].define(version: 2026_06_21_140102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_02_220019) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -63,6 +63,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_02_220019) do
     t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
     t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
     t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
+  end
+
+  create_table "game_chronicle_entries", force: :cascade do |t|
+    t.uuid "game_id", null: false
+    t.string "event_type", null: false
+    t.datetime "occurred_at"
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_chronicle_entries_on_game_id"
   end
 
   create_table "pitboss_entries", id: :serial, force: :cascade do |t|
