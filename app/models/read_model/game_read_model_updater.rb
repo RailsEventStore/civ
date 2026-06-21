@@ -10,7 +10,7 @@ module ReadModel
         case event
         when Game::PlayerRegistered
           read_model.registered_slots[event.data.fetch(:slot_id).to_i] = event.data.fetch(:player_id)
-          read_model.player_ids << event.data.fetch(:player_id)
+          read_model.player_ids |= [event.data.fetch(:player_id)]
         when Game::PlayerUnregistered
           removed_player_id = read_model.registered_slots.delete(event.data.fetch(:slot_id).to_i)
           read_model.unfinished_player_ids.delete(removed_player_id)

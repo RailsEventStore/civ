@@ -179,6 +179,17 @@ module ReadModel
       expect(read_model.ends_at).to eq(Time.at(1.hour + 24.hours).utc)
     end
 
+    specify("duplicate registration doesn't duplicate player_ids") do
+      given(
+        Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),
+        Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id}),
+        Game::PlayerRegistered.new(data: {slot_id: 1, player_id: player_1, game_id: game_id})
+      )
+      read_model = ReadModel::GameReadModel.find(game_id)
+
+      expect(read_model.player_ids).to eq([player_1])
+    end
+
     specify("player unregistered") do
       given(
         Game::GameHosted.new(data: {turn_timer: 24.hours.to_i, game_id: game_id}),

@@ -1,7 +1,7 @@
 require_relative "../spec_helper"
 
 module Game
-  RSpec.describe Player do
+  RSpec.describe Players do
     include InMemoryEventStore
 
     def given(*domain_events)
@@ -25,9 +25,9 @@ module Game
     end
 
     specify do
-      player_ids = PlayerIds.new(event_store).call(game_id)
+      players = Players.new(event_store).call(game_id)
 
-      expect(current_turn.player_ids).to eq([])
+      expect(players.player_ids).to eq([])
     end
 
     specify("player registered add to players list") do
@@ -49,6 +49,16 @@ module Game
       current_turn = CurrentTurn.new(event_store).call(game_id)
 
       expect(current_turn.ends_at).to eq(Time.at(24.hours).utc)
+    end
+
+    specify("duplicate registration doesn't add player twice") do
+      given(
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1}),
+        PlayerRegistered.new(data: {slot_id: 1, player_id: player_1})
+      )
+      players = Players.new(event_store).call(game_id)
+
+      expect(players.player_ids).to eq([player_1])
     end
 
     specify("player unregistered doesn't remove from players") do

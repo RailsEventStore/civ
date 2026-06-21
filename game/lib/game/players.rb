@@ -25,7 +25,7 @@ module Game
     end
 
     def handle_player_registered(state, event)
-      state[:player_ids] << event.data.fetch(:player_id)
+      state[:player_ids] |= [event.data.fetch(:player_id)]
       state
     end
   end
