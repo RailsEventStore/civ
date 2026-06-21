@@ -74,6 +74,13 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.lograge.enabled = true
+  config.lograge.logger = ActiveSupport::Logger.new(
+    Rails.root.join("log/requests.log"),
+    "weekly",
+    4
+  )
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

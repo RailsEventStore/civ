@@ -14,6 +14,7 @@ gem "pg"
 gem "will_paginate", "~> 3.1"
 gem "honeybadger"
 gem "sprockets-rails"
+gem "lograge"
 
 gem "slack-ruby-client", "~> 1.0"
 gem 'faraday-net_http_persistent'
