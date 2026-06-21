@@ -16,7 +16,7 @@ module Chronicle
 
     def build_text(event)
       case event
-      when Game::NewTurnStarted   then "Turn #{event.data[:turn]} has begun."
+      when Game::NewTurnStarted   then "#{TurnYearMapper.new.year_for(event.data[:turn])} has begun."
       when Game::CityFounded      then "#{player_name(event)} has founded a new city."
       when Game::WarStatusChanged then "War status has changed."
       when Game::CityConquered    then city_conquered_text(event)

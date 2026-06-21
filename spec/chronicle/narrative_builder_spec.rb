@@ -9,10 +9,10 @@ module Chronicle
       GameChronicleEntry.where(game_id: game_id)
     end
 
-    specify "NewTurnStarted records turn beginning" do
+    specify "NewTurnStarted records turn beginning with year" do
       builder.call(Game::NewTurnStarted.new(data: {turn: 5, game_id: game_id}))
 
-      expect(entries.sole.text).to eq("Turn 5 has begun.")
+      expect(entries.sole.text).to eq("3700 BC has begun.")
     end
 
     specify "CityFounded records city founding with player name" do
