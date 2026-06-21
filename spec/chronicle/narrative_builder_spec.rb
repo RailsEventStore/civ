@@ -15,25 +15,56 @@ module Chronicle
       expect(entries.sole.text).to eq("Turn 5 has begun.")
     end
 
-    specify "CityFounded records city founding" do
-      builder.call(Game::CityFounded.new(data: {game_id: game_id}))
+    specify "CityFounded records city founding with player name" do
+      player = Player.create!(steam_name: "Alice", slack_name: "alice")
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {0 => player.id})
 
-      expect(entries.sole.text).to eq("A new city has been founded.")
+      builder.call(Game::CityFounded.new(data: {game_id: game_id, slot: 0}))
+
+      expect(entries.sole.text).to eq("alice has founded a new city.")
     end
 
-    specify "CityConquered with annexed action" do
-      builder.call(Game::CityConquered.new(data: {game_id: game_id, action: "annexed"}))
-      expect(entries.sole.text).to eq("A city has been annexed.")
+    specify "CityFounded with unknown player" do
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {})
+
+      builder.call(Game::CityFounded.new(data: {game_id: game_id, slot: 0}))
+
+      expect(entries.sole.text).to eq("Unknown player has founded a new city.")
     end
 
-    specify "CityConquered with puppeted action" do
-      builder.call(Game::CityConquered.new(data: {game_id: game_id, action: "puppeted"}))
-      expect(entries.sole.text).to eq("A city has been puppeted.")
+    specify "CityConquered with annexed action includes player name" do
+      player = Player.create!(steam_name: "Bob", slack_name: "bob")
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {1 => player.id})
+
+      builder.call(Game::CityConquered.new(data: {game_id: game_id, slot: 1, action: "annexed"}))
+
+      expect(entries.sole.text).to eq("bob has annexed a city.")
     end
 
-    specify "CityConquered with razing_started action" do
-      builder.call(Game::CityConquered.new(data: {game_id: game_id, action: "razing_started"}))
-      expect(entries.sole.text).to eq("A city is being razed.")
+    specify "CityConquered with puppeted action includes player name" do
+      player = Player.create!(steam_name: "Bob", slack_name: "bob")
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {1 => player.id})
+
+      builder.call(Game::CityConquered.new(data: {game_id: game_id, slot: 1, action: "puppeted"}))
+
+      expect(entries.sole.text).to eq("bob has puppeted a city.")
+    end
+
+    specify "CityConquered with razing_started action includes player name" do
+      player = Player.create!(steam_name: "Bob", slack_name: "bob")
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {1 => player.id})
+
+      builder.call(Game::CityConquered.new(data: {game_id: game_id, slot: 1, action: "razing_started"}))
+
+      expect(entries.sole.text).to eq("bob has started razing a city.")
+    end
+
+    specify "CityConquered with unknown player" do
+      ReadModel::GameReadModel.create!(id: game_id, name: "Test", registered_slots: {})
+
+      builder.call(Game::CityConquered.new(data: {game_id: game_id, slot: 1, action: "annexed"}))
+
+      expect(entries.sole.text).to eq("Unknown player has annexed a city.")
     end
 
     specify "WarStatusChanged records war status change" do
