@@ -117,8 +117,9 @@ module LogsParser
     NetworkError = Class.new(StandardError)
     ServerError = Class.new(StandardError)
 
-    def initialize(host:, password: nil)
-      @http = Net::HTTP.new(host)
+    def initialize(host:, password: nil, use_ssl: false)
+      @http = Net::HTTP.new(host, use_ssl ? 443 : 80)
+      @http.use_ssl = use_ssl
       @password = password
     end
 

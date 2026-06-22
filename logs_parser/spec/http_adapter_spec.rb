@@ -45,6 +45,28 @@ RSpec.describe LogsParser::HttpAdapter do
     expect { adapter.send_data(payload) }.to raise_error(LogsParser::HttpAdapter::ServerError, "500")
   end
 
+  specify "send_data over HTTPS" do
+    stub_request(:post, "https://civ5stats.duckdns.org/pitboss_entries")
+      .with(
+        body: {
+          "pitboss_entry" => {
+            "game_name" => "arkency123",
+            "value" => "7",
+            "entry_type" => "NewTurnStarted",
+            "timestamp" => "1234.56"
+          }
+        }
+      )
+      .to_return(status: 204, body: "")
+
+    adapter = LogsParser::HttpAdapter.new(host: "civ5stats.duckdns.org", use_ssl: true)
+    payload = Payload.new("arkency123", "NewTurnStarted", "7", "1234.56")
+
+    response = adapter.send_data(payload)
+
+    expect(response.code).to eq("204")
+  end
+
   specify "send_data networkt error" do
     stub_request(:post, "http://fierce-something.com/pitboss_entries")
       .with(

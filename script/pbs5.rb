@@ -92,7 +92,7 @@ def main
   players_count = ARGV[1].to_i
   password = ARGV[2]
   initial_position = ARGV[3].to_i || 0
-  host = ARGV[4] || "fierce-reaches-40697.herokuapp.com"
+  host = ARGV[4] || "civ5stats.duckdns.org"
   log_file_path = ARGV[5] || "net_message_debug.log"
 
   unless game_name && players_count > 0 && password
@@ -101,7 +101,7 @@ def main
   end
 
   parser = LogsParser::Service.new(game_name, players_count)
-  http_adapter = LogsParser::HttpAdapter.new(host: host, password: password)
+  http_adapter = LogsParser::HttpAdapter.new(host: host, password: password, use_ssl: true)
   monitor = LogFileMonitor.new(log_file_path, initial_position)
 
   iterations_counter = 0
