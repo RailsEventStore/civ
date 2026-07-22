@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root(to: "root#welcome")
 
-  resources(:games, only: %i[show])
+  resources(:games, only: %i[show]) do
+    resource(:chronicle, only: %i[show])
+  end
   post("/games/say", to: "games#say")
   resources(:players)
   resources(:pitboss_entries, only: %i[create index])

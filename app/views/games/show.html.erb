@@ -22,8 +22,11 @@
     <%= distance_of_time_in_words(time_left) %>
   </div>
 
-  <div class="game__player-stats-link">
-    <h2>Player stats</h2>
-    <%= link_to "Slothfulness ranking", player_stats_path(game_id: game_id) %>
+  <div class="game__links">
+    <h2>Explore</h2>
+    <ul>
+      <li><%= link_to "Slothfulness ranking", player_stats_path(game_id: game_id) %></li>
+      <li><%= link_to "Read the chronicle", game_chronicle_path(game_id) %></li>
+    </ul>
   </div>
 </div>
