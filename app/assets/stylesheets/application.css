@@ -402,3 +402,16 @@ body {
 th {
   text-align: left;
 }
+
+.chronicle__entry {
+  margin: 0.2rem 0;
+}
+
+.chronicle__entry--turn {
+  font-weight: bolder;
+  margin-top: 2rem;
+}
+
+.chronicle__entry--event {
+  margin-left: 2rem;
+}

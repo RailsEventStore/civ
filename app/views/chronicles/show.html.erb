@@ -3,7 +3,8 @@
 
   <div class="chronicle__entries">
     <% entries.each do |entry| %>
-      <p class="chronicle__entry"><%= entry.text %></p>
+      <% new_turn = entry.event_type == "Game::NewTurnStarted" %>
+      <p class="chronicle__entry <%= new_turn ? "chronicle__entry--turn" : "chronicle__entry--event" %>"><%= entry.text %></p>
     <% end %>
   </div>
 </div>
