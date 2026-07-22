@@ -1,12 +1,9 @@
 <div class="chronicle">
   <h1><%= game_name %> Chronicle</h1>
 
-  <ol class="chronicle__entries">
+  <div class="chronicle__entries">
     <% entries.each do |entry| %>
-      <li class="chronicle__entry">
-        <time class="chronicle__entry-time"><%= entry.occurred_at&.strftime("%Y-%m-%d %H:%M") %></time>
-        <span class="chronicle__entry-text"><%= entry.text %></span>
-      </li>
+      <p class="chronicle__entry"><%= entry.text %></p>
     <% end %>
-  </ol>
+  </div>
 </div>
