@@ -9,6 +9,7 @@ ruby "3.1.6"
 
 gem "rails", "~> 7.0.3.1"
 gem "bootsnap"
+gem "dotenv-rails"
 gem "puma"
 gem "pg"
 gem "will_paginate", "~> 3.1"

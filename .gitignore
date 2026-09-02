@@ -29,3 +29,7 @@
 /config/credentials/test.key
 
 /config/credentials/production.key
+
+# Environment files hold secrets; only the test marker is checked in.
+/.env*
+!/.env.test
